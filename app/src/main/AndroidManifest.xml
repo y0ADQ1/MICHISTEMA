@@ -15,8 +15,6 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".SandsBoxActivity" />s
-        <activity android:name=".AddSandBoxActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

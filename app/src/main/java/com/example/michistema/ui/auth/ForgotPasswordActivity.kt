@@ -1,4 +1,4 @@
-package com.example.michistema
+package com.example.michistema.ui.auth
 
 import android.os.Bundle
 import android.widget.Toast
@@ -22,7 +22,6 @@ class ForgotPasswordActivity : AppCompatActivity() {
                 Toast.makeText(this, "Ingresa tu correo electrónico", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "Se ha enviado un correo a $email", Toast.LENGTH_SHORT).show()
-                // aqui ya egrgar lo del API
             }
         }
     }
