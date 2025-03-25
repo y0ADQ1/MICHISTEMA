@@ -1,66 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.DashboardAdminActivity"
-    android:padding="16dp">
+    android:padding="24dp"
+    tools:context=".ui.main.DashboardAdminActivity">
 
-    <EditText
-        android:id="@+id/etName"
+    <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Nombre del dispositivo"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <EditText
-        android:id="@+id/etDescription"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Descripción"
-        app:layout_constraintTop_toBottomOf="@id/etName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:inputType="textMultiLine"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etCode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Código"
-        app:layout_constraintTop_toBottomOf="@id/etDescription"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Registrar Dispositivo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <EditText
-        android:id="@+id/etConstant"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Constante"
-        android:inputType="number"
-        app:layout_constraintTop_toBottomOf="@id/etCode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del dispositivo"
+                android:padding="12dp"
+                android:background="@drawable/input_background"
+                app:layout_constraintTop_toBottomOf="@id/tvTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <CheckBox
-        android:id="@+id/cbActive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Activo"
-        app:layout_constraintTop_toBottomOf="@id/etConstant"
-        app:layout_constraintStart_toStartOf="parent"/>
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Descripción"
+                android:padding="12dp"
+                android:background="@drawable/input_background"
+                android:inputType="textMultiLine"
+                app:layout_constraintTop_toBottomOf="@id/etName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Crear Dispositivo"
-        app:layout_constraintTop_toBottomOf="@id/cbActive"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <EditText
+                android:id="@+id/etCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Código"
+                android:padding="12dp"
+                android:background="@drawable/input_background"
+                app:layout_constraintTop_toBottomOf="@id/etDescription"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
+            <EditText
+                android:id="@+id/etConstant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Constante"
+                android:padding="12dp"
+                android:background="@drawable/input_background"
+                android:inputType="number"
+                app:layout_constraintTop_toBottomOf="@id/etCode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <CheckBox
+                android:id="@+id/cbActive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activo"
+                app:layout_constraintTop_toBottomOf="@id/etConstant"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Crear Dispositivo"
+                android:textAllCaps="false"
+                android:padding="12dp"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@id/cbActive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

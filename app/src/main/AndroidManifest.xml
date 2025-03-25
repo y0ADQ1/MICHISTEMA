@@ -19,9 +19,6 @@
         andorid:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.auth.DevicesActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.auth.LoginActivity"
             android:exported="false" />
         <activity
@@ -40,15 +37,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.auth.RegisterActivity" />
-        <activity android:name=".ui.auth.ForgotPasswordActivity" />
+        <activity android:name=".ui.auth.ForgotPasswordActivity"/>
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.HomePageActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.auth.AddEnvironmentActivity"
             android:exported="false" />
     </application>
 

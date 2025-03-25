@@ -6,7 +6,6 @@ import android.preference.PreferenceManager
 
 object PreferenceHelper {
 
-    // Cambiar LoginActivity a Context para hacer este método más general
     fun defaultPrefs(context: Context): SharedPreferences
             = PreferenceManager.getDefaultSharedPreferences(context)
 
