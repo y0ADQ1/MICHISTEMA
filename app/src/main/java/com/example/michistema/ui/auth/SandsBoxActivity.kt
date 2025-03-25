@@ -1,10 +1,12 @@
-package com.example.michistema
+package com.example.michistema.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.michistema.R
+import com.example.michistema.adapters.SandBoxAdapter
 import com.example.michistema.databinding.ActivitySandsBoxBinding
 import com.example.michistema.models.SandBoxItem
 

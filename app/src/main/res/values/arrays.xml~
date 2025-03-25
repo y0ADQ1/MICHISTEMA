@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="environments">
+        <item>Recamara principal</item>
+        <item>Recamara secundaria</item>
+        <item>Sala de Estar</item>
+        <item>Comedor</item>
+        <item>Cocina</item>
+        <item>Oficina</item>
+        <item>Baño Principal</item>
+        <item>Baño Secundario</item>
+        <item>Patio</item>
+        <itemGarage
+    </string-array>
+</resources>

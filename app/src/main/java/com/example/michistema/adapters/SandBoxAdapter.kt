@@ -1,4 +1,4 @@
-package com.example.michistema
+package com.example.michistema.adapters
 
 import android.util.Log
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.michistema
+package com.example.michistema.ui.auth
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
