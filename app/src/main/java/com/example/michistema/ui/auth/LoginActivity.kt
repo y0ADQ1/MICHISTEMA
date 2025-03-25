@@ -9,6 +9,7 @@ import com.example.michistema.data.model.Request.LoginRequest
 import com.example.michistema.databinding.LoginActivityBinding
 import com.example.michistema.data.network.ApiService
 import com.example.michistema.data.model.Response.LoginResponse
+import com.example.michistema.ui.components.SplashScreen
 import com.example.michistema.ui.main.DashboardActivity
 import com.example.michistema.ui.main.DashboardAdminActivity
 import com.example.michistema.utils.PreferenceHelper
@@ -26,7 +27,6 @@ class LoginActivity : AppCompatActivity() {
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Verificar si ya existe un token guardado
         val preferences = PreferenceHelper.defaultPrefs(this)
         if (preferences["token", ""].contains(".")) {
             val intent = Intent(this, DashboardActivity::class.java)
@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        // Listener para el botón de login
         binding.btnLogin.setOnClickListener {
             login()
         }
@@ -61,7 +60,6 @@ class LoginActivity : AppCompatActivity() {
 
         val loginRequest = LoginRequest(email, password)
 
-        //  corutinas
         lifecycleScope.launch {
             try {
                 val response: Response<LoginResponse> = apiService.postLogin(loginRequest)
@@ -92,14 +90,14 @@ class LoginActivity : AppCompatActivity() {
     private fun createSessionPreference(token: String, role: Int) {
         val preferences = PreferenceHelper.defaultPrefs(this)
         preferences["token"] = token
-        preferences["role"] = role // Guardamos el rol
+        preferences["role"] = role
     }
 
     private fun navigateToRoleBasedActivity(role: Int) {
         val intent = when (role) {
             1 -> Intent(this, DashboardActivity::class.java)
             2 -> Intent(this, DashboardAdminActivity::class.java)
-            else -> Intent(this, LoginActivity::class.java)
+            else -> Intent(this, SplashScreen::class.java)
         }
         startActivity(intent)
         finish()

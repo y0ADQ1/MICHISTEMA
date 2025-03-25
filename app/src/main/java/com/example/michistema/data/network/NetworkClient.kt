@@ -15,7 +15,7 @@ object NetworkClient {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${getUserToken()}") // El token guardado
+                .addHeader("Authorization", "Bearer ${getUserToken()}")
                 .build()
             chain.proceed(request)
         }
