@@ -29,7 +29,7 @@ class DeviceAdapter(private var deviceList: List<deviceResponse>) :
         val device = deviceList[position]
 
         holder.txtNombreDispositivo.text = device.name
-        holder.txtEstadoDispositivo.text = if (device.active) "Conectado" else "Desconectado"
+        holder.txtEstadoDispositivo.text = if (device.active) "activo" else "deshabilitado"
         holder.txtEstadoDispositivo.setTextColor(
             holder.itemView.context.getColor(
                 if (device.active) android.R.color.holo_green_dark else android.R.color.holo_red_dark

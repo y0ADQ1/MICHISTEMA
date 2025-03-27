@@ -14,13 +14,13 @@ class DeviceViewModel : ViewModel() {
     private val _devices = MutableLiveData<List<deviceResponse>>()
     val devices: LiveData<List<deviceResponse>> get() = _devices
 
+
     fun getDevices() {
         viewModelScope.launch {
             val response = ApiService.create().getDevices()
             if (response.isSuccessful) {
                 _devices.value = response.body() ?: emptyList()
             } else {
-                // Manejo de errores (puedes agregar más detalles)
             }
         }
     }

@@ -7,16 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.AllDevicesActivity">
 
-    <!-- Botón alineado a la esquina izquierda -->
     <Button
+        android:id="@+id/volver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="volver"
-        android:id="@+id/volver"
         app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- RecyclerView para mostrar los dispositivos -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDevices"
         android:paddingTop="50dp"

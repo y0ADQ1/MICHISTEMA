@@ -9,7 +9,6 @@ class WebSocketManager {
     private val client = OkHttpClient() // Cliente OkHttp para WebSocket
     private var webSocket: WebSocket? = null
 
-    // Método para iniciar la conexión WebSocket
     fun startConnection(url: String) {
         val request = Request.Builder().url(url).build()
         val listener = object : WebSocketListener() {
