@@ -12,14 +12,14 @@
         android:id="@+id/iconImageView"
         android:layout_width="72dp"
         android:layout_height="72dp"
-        android:src="@drawable/cat_sandbox_icon"
-        android:contentDescription="Icono de arenero" />
+        android:src="@drawable/addition_icon"
+        android:contentDescription="Icono para agregar" />
 
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Arenero de: Nombre"
+        android:text="Agregar Arenero"
         android:textSize="14sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -27,10 +27,10 @@
         android:textColor="@color/black"/>
 
     <Button
-        android:id="@+id/viewMoreButton"
+        android:id="@+id/viewAdditionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver más"
+        android:text="Agregar"
         android:backgroundTint="@color/purple_500"
         android:textColor="@android:color/white"
         android:layout_marginTop="8dp"/>

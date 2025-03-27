@@ -1,7 +1,0 @@
-package com.example.michistema.adapters
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.example.michistema.databinding.ItemEnvirementBinding
-import com.example.michistema.models.Envirement

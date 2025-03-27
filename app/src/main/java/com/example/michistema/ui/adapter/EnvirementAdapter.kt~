@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.michistema.databinding.ItemEnvirementBinding
-import com.example.michistema.models.Envirement
+import com.example.michistema.data.model.Request.Envirement
 
 class EnvirementAdapter(
     private val envirementList: List<Envirement>,
