@@ -22,21 +22,26 @@ class AddEnvironmentActivity : AppCompatActivity() {
         binding = ActivityAddEnvironmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Initialize ViewModel
         viewModel = ViewModelProvider(this).get(AddEnvironmentViewModel::class.java)
 
+        // Set up the Spinner
         val environments = listOf("Recámara", "Sala de estar", "Cuarto de lavado", "Patio", "Cocina")
         val adapter = EnvironmentSpinnerAdapter(this, environments)
         binding.spinnerEnvironments.adapter = adapter
 
+        // Update ViewModel when Spinner selection changes
         binding.spinnerEnvironments.setOnItemSelectedListener(object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
                 viewModel.setSelectedEnvironment(environments[position])
             }
 
             override fun onNothingSelected(parent: android.widget.AdapterView<*>) {
+                // Do nothing
             }
         })
 
+        // Update ViewModel when EditText changes
         binding.etSecondaryName.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -45,10 +50,12 @@ class AddEnvironmentActivity : AppCompatActivity() {
             }
         })
 
+        // Back button click
         binding.btnBack.setOnClickListener {
             finish()
         }
 
+        // Color picker button click
         binding.btnChooseColor.setOnClickListener {
             ColorPickerDialog
                 .Builder(this)
@@ -64,6 +71,7 @@ class AddEnvironmentActivity : AppCompatActivity() {
                 .show()
         }
 
+        // Save button click
         binding.btnSaveEnvironment.setOnClickListener {
             val environment = viewModel.selectedEnvironment.value
             val secondaryName = viewModel.secondaryName.value
@@ -82,8 +90,10 @@ class AddEnvironmentActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            // Create the new environment string
             val newEnvironment = "$environment - $secondaryName"
 
+            // Pass the new environment back to HomePageActivity
             val resultIntent = Intent()
             resultIntent.putExtra("new_environment", newEnvironment)
             setResult(Activity.RESULT_OK, resultIntent)

@@ -30,8 +30,7 @@
         <activity
             android:name=".ui.auth.AddEnvironmentActivity"
             android:exported="false" />
-        <activity android:name=".ui.main.HomePageActivity"
-            android:exported="false"/>
+        <activity android:name=".ui.main.HomePageActivity"/>
         <activity
             android:name=".ui.components.SplashScreen"
             android:exported="true">

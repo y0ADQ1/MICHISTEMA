@@ -8,12 +8,14 @@ import com.example.michistema.R
 import com.example.michistema.databinding.ItemEnvironmentBinding
 
 class EnvironmentAdapter(
-    private val environments: List<String>,
-    private val onItemClick: (String) -> Unit) : RecyclerView.Adapter<EnvironmentAdapter.EnvironmentViewHolder>() {
+    private var environments: List<String>,
+    private val onItemClick: (String) -> Unit
+) : RecyclerView.Adapter<EnvironmentAdapter.EnvironmentViewHolder>() {
 
     class EnvironmentViewHolder(
         private val binding: ItemEnvironmentBinding,
-        private val onItemClick: (String) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+        private val onItemClick: (String) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(environment: String) {
             binding.tvRoomName.text = environment
@@ -36,4 +38,9 @@ class EnvironmentAdapter(
     }
 
     override fun getItemCount(): Int = environments.size
+
+    fun updateEnvironments(newEnvironments: List<String>) {
+        environments = newEnvironments
+        notifyDataSetChanged()
+    }
 }
