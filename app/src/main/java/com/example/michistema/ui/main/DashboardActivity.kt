@@ -45,6 +45,8 @@ class DashboardActivity : AppCompatActivity() {
 
     }
 
+
+
     private fun logout() {
         val preferences = PreferenceHelper.defaultPrefs(this)
         preferences["token"] = ""

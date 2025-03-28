@@ -24,7 +24,7 @@ class AllDevicesActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerViewDevices)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        deviceAdapter = DeviceAdapter(emptyList()) // Inicialmente vacío
+        deviceAdapter = DeviceAdapter(emptyList())
         recyclerView.adapter = deviceAdapter
 
         deviceViewModel.getDevices()
