@@ -19,6 +19,9 @@
         andorid:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.InicioActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.AllDevicesActivity"
             android:exported="false" />
         <activity
