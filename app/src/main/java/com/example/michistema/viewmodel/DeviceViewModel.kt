@@ -20,7 +20,6 @@ class DeviceViewModel : ViewModel() {
             if (response.isSuccessful) {
                 _devices.value = response.body() ?: emptyList()
             } else {
-                // Manejo de errores (puedes agregar más detalles)
             }
         }
     }

@@ -9,6 +9,7 @@ import com.example.michistema.data.model.Request.RegisterRequest
 import com.example.michistema.data.model.Response.RegisterResponse
 import com.example.michistema.data.network.ApiService
     import com.example.michistema.databinding.RegisterActivityBinding
+import com.example.michistema.ui.main.InicioActivity
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
+            val intent = Intent(this, InicioActivity::class.java)
             startActivity(intent)
         }
 

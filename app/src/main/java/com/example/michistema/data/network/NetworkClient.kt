@@ -1,24 +1,20 @@
+// com.example.michistema.data.network/NetworkClient.kt
 package com.example.michistema.data.network
 
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkClient {
+    private const val BASE_URL = "http://10.0.2.2:3333/v1/api/" // Asegúrate de que coincide con tu backend
 
-    private const val BASE_URL = "http://10.0.2.2:3333/v1/api/"
-
-    private fun getUserToken(): String {
-        return "tu_token_guardado"
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY // Para depurar
     }
 
     private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer ${getUserToken()}")
-                .build()
-            chain.proceed(request)
-        }
+        .addInterceptor(loggingInterceptor)
         .build()
 
     val retrofit: Retrofit = Retrofit.Builder()
@@ -26,5 +22,4 @@ object NetworkClient {
         .client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
-
 }

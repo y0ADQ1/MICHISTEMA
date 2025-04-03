@@ -2,16 +2,17 @@ package com.example.michistema.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.michistema.data.model.Request.LoginRequest
-import com.example.michistema.databinding.LoginActivityBinding
-import com.example.michistema.data.network.ApiService
 import com.example.michistema.data.model.Response.LoginResponse
+import com.example.michistema.data.network.ApiService
+import com.example.michistema.databinding.LoginActivityBinding
 import com.example.michistema.ui.components.SplashScreen
-import com.example.michistema.ui.main.DashboardActivity
 import com.example.michistema.ui.main.DashboardAdminActivity
+import com.example.michistema.ui.main.HomePageActivity
 import com.example.michistema.utils.PreferenceHelper
 import com.example.michistema.utils.PreferenceHelper.get
 import com.example.michistema.utils.PreferenceHelper.set
@@ -27,12 +28,6 @@ class LoginActivity : AppCompatActivity() {
         binding = LoginActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val preferences = PreferenceHelper.defaultPrefs(this)
-        if (preferences["token", ""].contains(".")) {
-            val intent = Intent(this, DashboardActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
 
         binding.btnLogin.setOnClickListener {
             login()
@@ -42,12 +37,13 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
+
         binding.tvLoginTitle3.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
-
         }
     }
+
 
     private fun login() {
         val email = binding.etEmail.text.toString().trim()
@@ -60,6 +56,11 @@ class LoginActivity : AppCompatActivity() {
 
         val loginRequest = LoginRequest(email, password)
 
+        Log.d("LoginActivity", "Enviando petición de login con:")
+        Log.d("LoginActivity", "Email: $email")
+        Log.d("LoginActivity", "Password: $password")
+
+        // Realiza la petición de login
         lifecycleScope.launch {
             try {
                 val response: Response<LoginResponse> = apiService.postLogin(loginRequest)
@@ -72,9 +73,14 @@ class LoginActivity : AppCompatActivity() {
                     }
 
                     if (loginResponse.status == 200) {
-                        createSessionPreference(loginResponse.token, loginResponse.user.role_id)
+                        val user = loginResponse.user
+                        if (user == null || user.id == null) {
+                            Toast.makeText(this@LoginActivity, "Datos de usuario incompletos", Toast.LENGTH_SHORT).show()
+                            return@launch
+                        }
 
-                        navigateToRoleBasedActivity(loginResponse.user.role_id)
+                        saveUserSession(loginResponse.token, user.role_id, user.name, user.id)
+                        navigateToRoleBasedActivity(user.role_id)
                     } else {
                         Toast.makeText(this@LoginActivity, "Credenciales incorrectas", Toast.LENGTH_SHORT).show()
                     }
@@ -87,17 +93,27 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun createSessionPreference(token: String, role: Int) {
+
+
+    private fun saveUserSession(token: String, role: Int, userName: String, userId: Int) {
         val preferences = PreferenceHelper.defaultPrefs(this)
         preferences["token"] = token
         preferences["role"] = role
+        preferences["userName"] = userName
+        preferences["userId"] = userId // Guarda el userId
+
+        // Agregar un log para ver los valores almacenados
+        Log.d("LoginActivity", "Token almacenado: $token")
+        Log.d("LoginActivity", "Role almacenado: $role")
+        Log.d("LoginActivity", "UserName almacenado: $userName")
+        Log.d("LoginActivity", "UserId almacenado: $userId")
     }
 
     private fun navigateToRoleBasedActivity(role: Int) {
         val intent = when (role) {
-            1 -> Intent(this, DashboardActivity::class.java)
-            2 -> Intent(this, DashboardAdminActivity::class.java)
-            else -> Intent(this, SplashScreen::class.java)
+            1 -> Intent(this, HomePageActivity::class.java) // Usuario normal
+            2 -> Intent(this, DashboardAdminActivity::class.java) // Administrador
+            else -> Intent(this, SplashScreen::class.java) // Si no se reconoce el rol, vuelve al splash
         }
         startActivity(intent)
         finish()

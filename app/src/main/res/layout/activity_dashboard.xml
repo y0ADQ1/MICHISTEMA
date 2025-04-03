@@ -61,6 +61,17 @@
                 android:padding="12dp"
                 android:layout_marginTop="24dp"/>
 
+            <Button
+                android:id="@+id/btn_limpiar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="limpiar arenero"
+                android:backgroundTint="@color/purple_500"
+                android:textColor="@android:color/white"
+                android:padding="12dp"
+                android:layout_marginTop="24dp"/>
+
+
 
 
         </LinearLayout>

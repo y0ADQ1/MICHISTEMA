@@ -1,42 +1,61 @@
+
 package com.example.michistema.ui.main
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.TextView
+import android.widget.PopupMenu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.michistema.R
+import com.example.michistema.databinding.ActivityDrinkerBinding
+import com.example.michistema.ui.adapter.DrinkerInfo
+import com.example.michistema.ui.adapter.DrinkerInfoAdapter
 import okhttp3.*
 import okio.ByteString
 
 class DrinkerActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityDrinkerBinding
     private lateinit var webSocketManager: WebSocketManager
-    private lateinit var txtAgua: TextView
-    private lateinit var txtGato: TextView
+    private lateinit var adapter: DrinkerInfoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_drinker)
+        binding = ActivityDrinkerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        txtAgua = findViewById(R.id.txt_get_agua)
-        txtGato = findViewById(R.id.txt_get_gato)
+        binding.recyclerViewDrinkerInfo.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewDrinkerInfo.adapter = adapter
 
         webSocketManager = WebSocketManager(this)
 
         val websocketUrl = "wss://tu-websocket-url.com"
         webSocketManager.startConnection(websocketUrl)
 
-        val btnBack: Button = findViewById(R.id.btn_back)
-        btnBack.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             onBackPressed()
         }
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        binding.btnMore.setOnClickListener {
+            val popupMenu = PopupMenu(this, binding.btnMore)
+            popupMenu.menuInflater.inflate(R.menu.drinker_options_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.action_modify_drinker -> {
+                        Log.d("DrinkerActivity", "Modificar el bebedero clicked")
+                        true
+                    }
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -45,7 +64,6 @@ class DrinkerActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Cerrar WebSocket cuando la actividad se destruye
         webSocketManager.closeConnection()
     }
 
@@ -65,11 +83,16 @@ class DrinkerActivity : AppCompatActivity() {
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     Log.d("WebSocket", "Mensaje recibido: $text")
                     activity.runOnUiThread {
+                        val newData = mutableListOf<DrinkerInfo>()
+                        val currentData = activity.adapter.drinkerInfoList
                         if (text.contains("agua")) {
-                            activity.txtAgua.text = text
+                            newData.add(DrinkerInfo("Agua:", text))
+                            newData.add(currentData.find { it.label == "Gato Cercano:" } ?: DrinkerInfo("Gato Cercano:", "siono"))
                         } else if (text.contains("gato")) {
-                            activity.txtGato.text = text
+                            newData.add(currentData.find { it.label == "Agua:" } ?: DrinkerInfo("Agua:", "siono"))
+                            newData.add(DrinkerInfo("Gato Cercano:", text))
                         }
+                        activity.adapter.updateData(newData)
                     }
                 }
 
@@ -90,7 +113,6 @@ class DrinkerActivity : AppCompatActivity() {
                 }
             }
 
-            // Establecer la conexión WebSocket
             webSocket = client.newWebSocket(request, listener)
         }
 
@@ -99,3 +121,6 @@ class DrinkerActivity : AppCompatActivity() {
         }
     }
 }
+
+
+

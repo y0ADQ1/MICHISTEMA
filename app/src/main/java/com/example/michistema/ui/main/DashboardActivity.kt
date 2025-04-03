@@ -5,14 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import android.widget.ImageButton
 import com.example.michistema.R
 import com.example.michistema.ui.auth.LoginActivity
-import com.example.michistema.ui.main.DrinkerActivity
 import com.example.michistema.utils.PreferenceHelper.set
-import com.example.michistema.utils.PreferenceHelper.get
 import com.example.michistema.utils.PreferenceHelper
 
 
@@ -36,12 +31,16 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val btnGetDevices: Button = findViewById(R.id.btn_get_devices)
-        btnGetDevices.setOnClickListener {
-            val intent = Intent(this, AllDevicesActivity::class.java)
+
+        val btnClear: Button = findViewById(R.id.btn_limpiar)
+        btnClear.setOnClickListener {
+            val intent = Intent(this, LimpiarAreneroActivity::class.java)
             startActivity(intent)
         }
+
     }
+
+
 
     private fun logout() {
         val preferences = PreferenceHelper.defaultPrefs(this)
