@@ -45,11 +45,21 @@ class ProfileActivity : AppCompatActivity() {
         btnUpdatePassword = findViewById(R.id.btn_update_password)
         btnLogout = findViewById(R.id.btn_logout)
 
-        val mis_dispositivos: Button = findViewById(R.id.mis_dispositivos)
-        mis_dispositivos.setOnClickListener {
-            val intent = Intent(this, DeviceListActivity::class.java)
+        val devices: Button = findViewById(R.id.mis_dispositivos)
+        devices.setOnClickListener {
+            Log.d("ProfileActivity", "Botón presionado, redirigiendo a AllDevicesUserActivity")
+
+            // Crear el intent para AllDevicesUserActivity
+            val intent = Intent(this, AllDevicesUserActivity::class.java)
+
+            // Agregar el userId al intent
+            intent.putExtra("userId", userId)
+
+            // Iniciar la actividad
             startActivity(intent)
         }
+
+
 
         val preferences = PreferenceHelper.defaultPrefs(this)
         token = preferences["token", ""].toString()

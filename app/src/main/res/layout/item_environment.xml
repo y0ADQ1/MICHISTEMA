@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:text="Sala de estar 1 - Sala común"
+            android:text="Environment Name"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -42,6 +42,7 @@
             app:layout_constraintEnd_toStartOf="@id/tvArrow"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
+
 
         <TextView
             android:id="@+id/tvArrow"

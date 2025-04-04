@@ -1,43 +1,71 @@
-package com.example.michistema.ui.adapter
+package com.example.michistema.ui.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.michistema.R
-import com.example.michistema.data.model.Device
-import com.example.michistema.data.model.Response.deviceResponse
+import com.example.michistema.data.model.UserDevice
+import com.example.michistema.ui.main.DeviceDetailAreneroActivity
+import com.example.michistema.ui.main.DeviceDetailBebederoActivity
+import com.example.michistema.ui.main.DeviceDetailComedorActivity
 
-class DeviceAdapter(private var deviceList: List<Device>) :
-    RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
+class DeviceAdapter(
+    private var devices: List<UserDevice>,
+    private val onDeviceClick: (UserDevice) -> Unit
+) : RecyclerView.Adapter<DeviceAdapter.DeviceViewHolder>() {
+
+    class DeviceViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val txtDeviceName: TextView = view.findViewById(R.id.txtDeviceName)
+        val txtDeviceStatus: TextView = view.findViewById(R.id.txtDeviceStatus)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_device_profile, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_device_profile, parent, false)
         return DeviceViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        val device = deviceList[position]
-        holder.bind(device)
-    }
+        val userDevice = devices[position]
 
-    override fun getItemCount(): Int = deviceList.size
+        // Manejar caso donde device sea null
+        val device = userDevice.device
+        holder.txtDeviceName.text = device?.name ?: "Dispositivo sin nombre"
+        holder.txtDeviceStatus.text = if (device?.active == true) "Activo" else "Inactivo"
 
-    fun updateList(newDevices: List<Device>) {
-        deviceList = newDevices
-        notifyDataSetChanged()
-    }
+        // Establece el listener de clic en el ítem
+        holder.itemView.setOnClickListener {
+            if (device != null) { // Solo procede si device no es null
+                val intent: Intent
+                val deviceId = device.id
 
+                // Lógica condicional basada en el deviceId
+                if (deviceId == 1) {
+                    intent = Intent(holder.itemView.context, DeviceDetailAreneroActivity::class.java)
+                    intent.putExtra("device_id", deviceId)
+                    intent.putExtra("device_name", device.name)
+                } else if (deviceId == 2) {
+                    intent = Intent(holder.itemView.context, DeviceDetailBebederoActivity::class.java)
+                    intent.putExtra("device_id", deviceId)
+                    intent.putExtra("device_name", device.name)
+                } else {
+                    intent = Intent(holder.itemView.context, DeviceDetailComedorActivity::class.java)
+                    intent.putExtra("device_id", deviceId)
+                    intent.putExtra("device_name", device.name)
+                }
 
-    class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val nameTextView: TextView = itemView.findViewById(R.id.tv_device_name)
-        private val quantityTextView: TextView = itemView.findViewById(R.id.tv_device_quantity)
-
-        fun bind(device: Device) {
-            nameTextView.text = device.name
-            quantityTextView.visibility = View.GONE // Ocultamos cantidad por item
+                // Inicia la actividad correspondiente
+                holder.itemView.context.startActivity(intent)
+            }
         }
+    }
+
+    override fun getItemCount(): Int = devices.size
+
+    fun updateData(newDevices: List<UserDevice>) {
+        devices = newDevices
+        notifyDataSetChanged()
     }
 }

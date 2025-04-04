@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -15,8 +14,8 @@ import com.example.michistema.data.network.NetworkClient
 import com.example.michistema.databinding.ActivityHomePageBinding
 import com.example.michistema.ui.adapter.EnvironmentAdapter
 import com.example.michistema.utils.PreferenceHelper
-import com.example.michistema.utils.PreferenceHelper.get
 import com.example.michistema.viewmodel.HomePageViewModel
+
 
 class HomePageActivity : AppCompatActivity() {
 
@@ -25,7 +24,6 @@ class HomePageActivity : AppCompatActivity() {
     private lateinit var adapter: EnvironmentAdapter
     private lateinit var apiService: ApiService
 
-
     private lateinit var token: String
     private var userId: Int = 0
 
@@ -33,11 +31,9 @@ class HomePageActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data
-            val newEnvironment = data?.getStringExtra("new_environment")
-            newEnvironment?.let {
-                viewModel.addEnvironment(it) // Opcional si usas la API para agregar
-                loadEnvironmentsFromApi() // Recarga desde la API
+            result.data?.getStringExtra("new_environment")?.let {
+                viewModel.addEnvironment(it, "Nueva Descripción", userId, token)
+                loadEnvironmentsFromApi()
             }
         }
     }
@@ -47,11 +43,9 @@ class HomePageActivity : AppCompatActivity() {
         binding = ActivityHomePageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         val preferences = PreferenceHelper.defaultPrefs(this)
-        token = preferences["token", ""].toString()
-        userId = preferences["userId", 0] as Int
-
+        token = preferences.getString("token", "") ?: ""
+        userId = preferences.getInt("userId", 0)
 
         // Inicializa ApiService
         apiService = NetworkClient.retrofit.create(ApiService::class.java)
@@ -60,11 +54,18 @@ class HomePageActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, ViewModelFactory(apiService)).get(HomePageViewModel::class.java)
 
         adapter = EnvironmentAdapter(emptyList()) { environment ->
-            Toast.makeText(this, "Clicked: ${environment.name}", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, EnvironmentDetailActivity::class.java).apply {
+                putExtra("environment_name", environment.name)
+                putExtra("environment_id", environment.id)
+                putExtra("user_id", userId) // Enviar userId como Int al EnvironmentDetailActivity
+            }
+            startActivity(intent)
         }
 
-        binding.recyclerViewHomePage.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewHomePage.adapter = adapter
+        binding.recyclerViewHomePage.apply {
+            layoutManager = LinearLayoutManager(this@HomePageActivity)
+            adapter = this@HomePageActivity.adapter
+        }
 
         viewModel.environments.observe(this) { environments ->
             adapter.updateEnvironments(environments)
@@ -72,10 +73,24 @@ class HomePageActivity : AppCompatActivity() {
         }
 
         viewModel.navigateToAddEnvironment.observe(this) { navigate ->
-            if (navigate == true) {
+            if (navigate) {
                 val intent = Intent(this, AddEnvironmentActivity::class.java)
                 addEnvironmentLauncher.launch(intent)
                 viewModel.onNavigationHandled()
+            }
+        }
+
+        // Single click listener for btnMyProfile
+        binding.btnMyProfile.setOnClickListener {
+            if (userId != 0 && token.isNotEmpty()) { // Check if userId and token are valid
+                val intent = Intent(this, ProfileActivity::class.java).apply {
+                    putExtra("user_id", userId) // Enviar userId como Int al ProfileActivity
+                    putExtra("token", token)
+                }
+                startActivity(intent)
+                Log.d("HomePageActivity", "Navigating to ProfileActivity with userId: $userId, token: $token")
+            } else {
+                Log.e("HomePageActivity", "Invalid userId or token: userId=$userId, token=$token")
             }
         }
 
@@ -83,28 +98,17 @@ class HomePageActivity : AppCompatActivity() {
             viewModel.onAddEnvironmentClicked()
         }
 
-        binding.btnMyProfile.setOnClickListener {
-            val preferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-            val userId = preferences.getString("userId", null)
-            val token = preferences.getString("token", null)
-            if (userId != null && token != null) {
-                val intent = Intent(this, ProfileActivity::class.java)
-                intent.putExtra("userId", userId)
-                intent.putExtra("token", token)
-                startActivity(intent)
-                Log.d("HomePageActivity", "userId: $userId")
-                Log.d("HomePageActivity", "token: $token")
-            }
-            startActivity(Intent(this, ProfileActivity::class.java))
+        // Configuración de SwipeRefreshLayout
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            loadEnvironmentsFromApi() // Recargar entornos desde la API
         }
-
 
         // Cargar entornos desde la API al iniciar
         loadEnvironmentsFromApi()
     }
 
     private fun loadEnvironmentsFromApi() {
-        viewModel.loadEnvironments(userId) // Sin token
+        viewModel.loadEnvironments(userId, token)
     }
 }
 

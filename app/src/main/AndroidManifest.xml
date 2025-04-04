@@ -19,6 +19,24 @@
         andorid:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.main.StatsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.AllDevicesUserActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.DeviceDetailComedorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.DeviceDetailBebederoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.DeviceDetailAreneroActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.main.EnvironmentDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.main.ProfileActivity"
             android:exported="false" />
         <activity

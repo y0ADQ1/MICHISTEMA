@@ -1,11 +1,12 @@
-// com.example.michistema.ui.adapter/EnvironmentAdapter.kt
 package com.example.michistema.ui.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.michistema.databinding.ItemEnvironmentBinding
 import com.example.michistema.data.model.Environment
+import com.example.michistema.ui.main.EnvironmentDetailActivity
 
 class EnvironmentAdapter(
     private var environments: List<Environment>,
@@ -14,9 +15,13 @@ class EnvironmentAdapter(
 
     class EnvironmentViewHolder(private val binding: ItemEnvironmentBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(environment: Environment, onClick: (Environment) -> Unit) {
             binding.textViewEnvironmentName.text = environment.name
-            binding.root.setOnClickListener { onClick(environment) }
+            binding.root.setOnClickListener {
+                // Aquí se llama al onClick que fue pasado como parámetro
+                onClick(environment)
+            }
         }
     }
 
