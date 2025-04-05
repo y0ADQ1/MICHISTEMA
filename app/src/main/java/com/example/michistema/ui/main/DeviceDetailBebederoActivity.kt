@@ -1,7 +1,5 @@
 package com.example.michistema.ui.main
 
-import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -18,25 +16,24 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding = ActivityDeviceDetailBebederoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
-        }
-
-        // Recibir el ID y el nombre del dispositivo
+        // Obtener datos del intent
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
+        val environmentId = intent.getIntExtra("environment_id", -1)
+        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
+        val userId = intent.getIntExtra("user_id", -1)
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
-
-            // Simulación de estado (debes reemplazarlo con tus datos reales)
-            val gatoPresente: Boolean? = null  // null si no hay datos
-            val hayAgua: Boolean? = null       // null si no hay datos
-
-            actualizarIndicadores(gatoPresente, hayAgua)
         }
+
+        // Botón para regresar a la actividad anterior
+        val btnBack: Button = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Simplemente vuelve a la actividad anterior
+        }
+
+
     }
 
     private fun loadDeviceDetails(deviceId: Int, deviceName: String) {
@@ -48,32 +45,10 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         val messageSender = MessageSender()
         messageSender.enviarMensaje(topic, payload,
             onResponse = { response ->
-                println(response)
+                println("Respuesta: $response")
             },
             onError = { error ->
-                println(error)
+                println("Error: $error")
             })
-    }
-
-    private fun actualizarIndicadores(gatoPresente: Boolean?, hayAgua: Boolean?) {
-        val gris = Color.GRAY
-        val rojo = Color.RED
-        val verde = Color.GREEN
-
-        // Indicador de proximidad
-        val colorProximidad = when (gatoPresente) {
-            true -> rojo         // gato presente
-            false -> verde       // sin gato
-            null -> gris         // sin datos
-        }
-        binding.statusProximidad.setBackgroundColor(colorProximidad)
-
-        // Indicador de agua
-        val colorAgua = when (hayAgua) {
-            true -> verde        // hay agua
-            false -> rojo        // no hay agua
-            null -> gris         // sin datos
-        }
-        binding.statusAgua.setBackgroundColor(colorAgua)
     }
 }
