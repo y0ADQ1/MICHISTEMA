@@ -7,204 +7,101 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.StatsActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containerBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_container"
+        android:elevation="8dp"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/containerBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_container"
-            android:elevation="8dp"
-            android:padding="8dp"
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Volver"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:background="@drawable/gradient_button_back"
+            android:stateListAnimator="@animator/button_elevation"
+            app:backgroundTint="@null"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
-            <Button
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="Volver"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
-                android:background="@drawable/gradient_button_back"
-                android:stateListAnimator="@animator/button_elevation"
-                app:backgroundTint="@null"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-            <TextView
-                android:id="@+id/nameLitterBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estadisticas Generales"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginStart="20dp"
-                android:textColor="@android:color/black"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_back"
-                app:layout_constraintHorizontal_bias="0.5"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/outerContainer"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/rounded_container"
-            android:elevation="8dp"
-            android:padding="12dp"
-            app:layout_constraintTop_toBottomOf="@id/containerBar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/innerContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#CE8BB9"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0">
-
-                <TextView
-                    android:id="@+id/tv_UA"
-                    android:layout_width="174dp"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="45dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="Usos del Arenero:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_UC"
-                    android:layout_width="174dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="100dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="Usos del Comedor:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tv_vUA"
-                    android:layout_width="174dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="44dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="v_ua"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintTop_toBottomOf="@id/tv_vhumedad"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintLeft_toRightOf="@id/tv_UA"/>
-
-                <TextView
-                    android:id="@+id/tv_vhumedad"
-                    android:layout_width="174dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="v_uc"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/tv_UC"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_vUA" />
-
-                <TextView
-                    android:id="@+id/tv_vgases"
-                    android:layout_width="174dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="9dp"
-                    android:layout_marginEnd="8dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="v_g"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintHorizontal_weight="1"
-                    app:layout_constraintStart_toEndOf="@+id/tv_UB"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_vhumedad" />
-
-                <TextView
-                    android:id="@+id/tv_UB"
-                    android:layout_width="174dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:background="#F6DCEE"
-                    android:padding="12dp"
-                    android:text="Usos del Bebedero:"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_UC" />
-
-                <Button
-                    android:id="@+id/btnUpStats"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="Actualizar"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:background="#F6DCEE"
-                    android:stateListAnimator="@animator/button_elevation"
-                    android:layout_marginStart="25dp"
-                    app:backgroundTint="@null"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_UB"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/nameLitterBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Estadísticas Generales"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_back"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/outerContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/rounded_container"
+        android:elevation="8dp"
+        android:padding="12dp"
+        app:layout_constraintTop_toBottomOf="@id/containerBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/innerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CE8BB9"
+            android:padding="8dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_stats"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btnUpStats"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
+            <Button
+                android:id="@+id/btnUpStats"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Actualizar"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:background="#F6DCEE"
+                android:stateListAnimator="@animator/button_elevation"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp"
+                app:backgroundTint="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
