@@ -30,10 +30,17 @@
         <activity
             android:name=".ui.auth.AddEnvironmentActivity"
             android:exported="false" />
-        <activity android:name=".ui.main.HomePageActivity"
+        <activity android:name=".ui.main.DeviceListActivity"
             android:exported="false"/>
+        <activity android:name=".ui.main.DrinkerActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.main.CatFeederActivity"
+            android:exported="false"/>
+        <activity android:name=".ui.main.LitterBoxActivity"
+            android:exported="false"/>
+
         <activity
-            android:name=".ui.components.SplashScreen"
+            android:name=".ui.main.HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

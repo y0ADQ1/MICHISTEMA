@@ -8,7 +8,7 @@
     android:layout_marginVertical="4dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@drawable/rounded_container">
+    app:cardBackgroundColor="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,8 +38,7 @@
             android:maxLines="1"
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@id/img_dispositivo"
-            app:layout_constraintTop_toTopOf="@id/img_dispositivo"
-            app:layout_constraintEnd_toStartOf="@id/img_estado" />
+            app:layout_constraintTop_toTopOf="@id/img_dispositivo"/>
 
         <!-- Estado del dispositivo -->
         <TextView
@@ -53,21 +52,12 @@
             app:layout_constraintTop_toBottomOf="@id/txt_nombre_dispositivo"
             app:layout_constraintEnd_toEndOf="@id/txt_nombre_dispositivo" />
 
-        <!-- Imagen de estado -->
-        <ImageView
-            android:id="@+id/img_estado"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_more"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/txt_estado_dispositivo" />
-
         <!-- Botón Deshabilitar -->
         <Button
             android:id="@+id/btn_disable"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:text="Deshabilitar"
             android:textSize="14sp"
             android:textColor="@android:color/white"
@@ -82,8 +72,9 @@
         <!-- Botón Habilitar -->
         <Button
             android:id="@+id/btn_aviable"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:text="Habilitar"
             android:textSize="14sp"
             android:textColor="@android:color/white"
@@ -98,8 +89,9 @@
         <!-- Botón Eliminar -->
         <Button
             android:id="@+id/btn_delete"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
             android:text="Eliminar"
             android:textSize="14sp"
             android:textColor="@android:color/white"

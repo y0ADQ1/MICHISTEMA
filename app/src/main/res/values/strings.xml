@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">MICHISTEMA</string>
+    <string-array name="device_types">
+        <item>Arenero</item>
+        <item>Bebedero</item>
+        <item>Comedero</item>
+    </string-array>
 </resources>

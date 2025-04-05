@@ -26,6 +26,7 @@ class EnvironmentAdapter(
                 binding.root.startAnimation(animation)
                 onItemClick(environment)
 
+                // Navigate to DeviceListActivity
                 val intent = Intent(binding.root.context, DeviceListActivity::class.java)
                 intent.putExtra("environment_name", environment)
                 binding.root.context.startActivity(intent)

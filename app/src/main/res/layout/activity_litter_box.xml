@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
     android:background="#D680BA"
-    tools:context=".ui.main.CatFeederActivity">
+    tools:context=".ui.main.LitterBoxActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerBar"
@@ -40,15 +40,15 @@
             android:id="@+id/nameLitterBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre del Bebedero"
+            android:text="ARENEROS"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_back"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -69,125 +69,195 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#CE8BB9"
-            android:padding="8dp">
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
-                android:id="@+id/txtDeviceId"
-                android:layout_width="0dp"
+                android:id="@+id/txtDeviceld"
+                android:layout_width="174dp"
                 android:layout_height="wrap_content"
                 android:text="ID del dispositivo:"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="38dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#F6DCEE"
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txtDeviceName"
-                android:layout_width="0dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
-                android:text="Nombre del Dispositivo:"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="85dp"
                 android:background="#F6DCEE"
                 android:padding="8dp"
+                android:text="Nombre del Dispositivo:"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtDeviceId"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDeviceld"/>
 
             <TextView
                 android:id="@+id/tv_estaono"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Esta o no"
+                android:layout_width="174dp"
+                android:layout_height="45dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="135dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:background="#F6DCEE"
                 android:padding="12dp"
+                android:text="Esta o no"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/txtDeviceName"
-                app:layout_constraintEnd_toStartOf="@id/tv_estaono4" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtDeviceName"/>
+
+            <TextView
+                android:id="@+id/tv_humedad"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="190dp"
+                android:background="#F6DCEE"
+                android:padding="12dp"
+                android:text="Estado de Humedad"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_estaono4"
-                android:layout_width="0dp"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="135dp"
+                android:background="#F6DCEE"
+                android:padding="12dp"
                 android:text="v_e"
-                android:background="#F6DCEE"
-                android:padding="12dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_estaono"
-                app:layout_constraintTop_toBottomOf="@id/txtDeviceName"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintTop_toBottomOf="@id/tv_vhumedad"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_estaono"/>
 
             <TextView
-                android:id="@+id/tv_agua"
-                android:layout_width="0dp"
+                android:id="@+id/tv_vhumedad"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
-                android:text="Hay Agua"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="8dp"
                 android:background="#F6DCEE"
                 android:padding="12dp"
+                android:text="v_h"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tv_humedad"
+                app:layout_constraintTop_toBottomOf="@+id/tv_estaono4" />
+
+            <TextView
+                android:id="@+id/tv_vgases"
+                android:layout_width="158dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="8dp"
+                android:background="#F6DCEE"
+                android:padding="12dp"
+                android:text="v_g"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/tv_gases"
+                app:layout_constraintTop_toBottomOf="@+id/tv_vhumedad" />
+
+            <TextView
+                android:id="@+id/tv_gases"
+                android:layout_width="174dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="#F6DCEE"
+                android:padding="12dp"
+                android:text="Estado de Gas"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_estaono" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_humedad" />
 
-            <TextView
-                android:id="@+id/tv_va"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="v_a"
-                android:background="#F6DCEE"
-                android:padding="12dp"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_agua"
-                app:layout_constraintTop_toBottomOf="@id/tv_estaono4"
-                app:layout_constraintEnd_toEndOf="parent" />
 
             <Button
-                android:id="@+id/btn1"
+                android:id="@+id/btn_limpiar"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:text="Limpiar"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:background="#F6DCEE"
                 android:stateListAnimator="@animator/button_elevation"
                 android:layout_marginStart="25dp"
+                android:Radium="8dp"
                 app:backgroundTint="@null"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_va"
+                app:layout_constraintTop_toBottomOf="@+id/tv_gases"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
             <Button
-                android:id="@+id/btn2"
+                android:id="@+id/btn_limpiar_completo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="2"
+                android:text="Limpiar Completo"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:background="#F6DCEE"
                 android:stateListAnimator="@animator/button_elevation"
                 android:layout_marginStart="25dp"
+                android:Radium="8dp"
                 app:backgroundTint="@null"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn1"
+                app:layout_constraintTop_toBottomOf="@+id/btn_limpiar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

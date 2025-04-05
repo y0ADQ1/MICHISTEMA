@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/filter_all"
+        android:title="Todos" />
+    <item
+        android:id="@+id/filter_litter_box"
+        android:title="Areneros" />
+    <item
+        android:id="@+id/filter_water_dispenser"
+        android:title="Bebederos" />
+    <item
+        android:id="@+id/filter_cat_feeder"
+        android:title="Comederos" />
+</menu>

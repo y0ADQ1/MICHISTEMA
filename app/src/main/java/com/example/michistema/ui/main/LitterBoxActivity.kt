@@ -16,43 +16,45 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.michistema.R
-import com.example.michistema.databinding.ActivityDrinkerBinding
+import com.example.michistema.databinding.ActivityLitterBoxBinding
 import com.example.michistema.databinding.DialogAddDeviceBinding
 import com.example.michistema.model.DeviceCategory
-import com.example.michistema.ui.adapter.DrinkerInfo
-import com.example.michistema.ui.adapter.DrinkerInfoAdapter
+import com.example.michistema.ui.adapter.LitterBoxInfo
+import com.example.michistema.ui.adapter.LitterBoxInfoAdapter
 import okhttp3.*
 import okio.ByteString
 
-class DrinkerActivity : AppCompatActivity() {
+class LitterBoxActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDrinkerBinding
+    private lateinit var binding: ActivityLitterBoxBinding
     private lateinit var webSocketManager: WebSocketManager
-    private lateinit var adapter: DrinkerInfoAdapter
+    private lateinit var adapter: LitterBoxInfoAdapter
     private lateinit var deviceCategory: DeviceCategory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        binding = ActivityDrinkerBinding.inflate(layoutInflater)
+        binding = ActivityLitterBoxBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         deviceCategory = intent.getParcelableExtra("device_category") ?: DeviceCategory(
-            "Bebedero Desconocido",
-            R.drawable.noun_water_dispenser_3516363,
-            R.layout.item_water_dispenser,
-            "WaterDispenser"
+            "Arenero Desconocido",
+            R.drawable.noun_litter_box_6692365,
+            R.layout.item_litter_box,
+            "LitterBox"
         )
 
-        binding.nameDrinker.text = deviceCategory.name
+        binding.nameLitterBox.text = deviceCategory.name
 
         val initialData = listOf(
-            DrinkerInfo("Agua:", "Unknown"),
-            DrinkerInfo("Gato Cercano:", "Unknown")
+            LitterBoxInfo("Cleaning Interval:", deviceCategory.cleaningInterval ?: "N/A"),
+            LitterBoxInfo("Estado de Gases:", "Unknown"),
+            LitterBoxInfo("Estado de Humedad:", "Unknown")
+            LitterBoxInfo("")
         )
-        adapter = DrinkerInfoAdapter(initialData)
-        binding.recyclerViewDrinkerInfo.layoutManager = LinearLayoutManager(this)
-        binding.recyclerViewDrinkerInfo.adapter = adapter
+        adapter = LitterBoxInfoAdapter(initialData)
+        binding.recyclerViewLitterBoxInfo.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewLitterBoxInfo.adapter = adapter
 
         webSocketManager = WebSocketManager(this)
         val websocketUrl = "wss://tu-websocket-url.com"
@@ -64,10 +66,10 @@ class DrinkerActivity : AppCompatActivity() {
 
         binding.btnMore.setOnClickListener {
             val popupMenu = PopupMenu(this, binding.btnMore)
-            popupMenu.menuInflater.inflate(R.menu.drinker_options_menu, popupMenu.menu)
+            popupMenu.menuInflater.inflate(R.menu.litter_box_options_menu, popupMenu.menu)
             popupMenu.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.action_modify_drinker -> {
+                    R.id.action_modify_litter_box -> {
                         showModifyDeviceDialog()
                         true
                     }
@@ -90,17 +92,27 @@ class DrinkerActivity : AppCompatActivity() {
             .setView(dialogBinding.root)
             .create()
 
-        dialogBinding.tvDialogTitle.text = "Modificar Bebedero"
+        dialogBinding.tvDialogTitle.text = "Modificar Arenero"
 
         dialogBinding.spinnerDeviceType.visibility = View.GONE
 
         dialogBinding.etDeviceName.setText(deviceCategory.name)
 
-        dialogBinding.tvCleaningIntervalLabel.visibility = View.GONE
-        dialogBinding.timePickerCleaningInterval.visibility = View.GONE
+        dialogBinding.tvCleaningIntervalLabel.visibility = View.VISIBLE
+        dialogBinding.timePickerCleaningInterval.visibility = View.VISIBLE
         dialogBinding.tvFoodAmountLabel.visibility = View.GONE
         dialogBinding.etFoodAmount.visibility = View.GONE
         dialogBinding.tvFoodAmountConverted.visibility = View.GONE
+
+        deviceCategory.cleaningInterval?.let { interval ->
+            val parts = interval.split(":")
+            if (parts.size == 2) {
+                val hour = parts[0].toIntOrNull() ?: 0
+                val minute = parts[1].toIntOrNull() ?: 0
+                dialogBinding.timePickerCleaningInterval.hour = hour
+                dialogBinding.timePickerCleaningInterval.minute = minute
+            }
+        }
 
         dialogBinding.btnCancel.setOnClickListener {
             dialog.dismiss()
@@ -114,19 +126,24 @@ class DrinkerActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            val hour = dialogBinding.timePickerCleaningInterval.hour
+            val minute = dialogBinding.timePickerCleaningInterval.minute
+            val cleaningInterval = String.format("%02d:%02d", hour, minute)
             val updatedDevice = DeviceCategory(
                 deviceName,
-                R.drawable.noun_water_dispenser_3516363,
-                R.layout.item_water_dispenser,
-                "WaterDispenser",
-                deviceCategory.environment
+                R.drawable.noun_litter_box_6692365,
+                R.layout.item_litter_box,
+                "LitterBox",
+                deviceCategory.environment,
+                cleaningInterval
             )
 
             deviceCategory = updatedDevice
-            binding.nameDrinker.text = deviceCategory.name
+            binding.nameLitterBox.text = deviceCategory.name
             adapter.updateData(listOf(
-                DrinkerInfo("Agua:", "Unknown"),
-                DrinkerInfo("Gato Cercano:", "Unknown")
+                LitterBoxInfo("Cleaning Interval:", deviceCategory.cleaningInterval ?: "N/A"),
+                LitterBoxInfo("Usage Status:", "Unknown"),
+                LitterBoxInfo("Last Cleaned:", "Unknown")
             ))
 
             val resultIntent = Intent()
@@ -145,7 +162,7 @@ class DrinkerActivity : AppCompatActivity() {
         webSocketManager.closeConnection()
     }
 
-    class WebSocketManager(private val activity: DrinkerActivity) {
+    class WebSocketManager(private val activity: LitterBoxActivity) {
 
         private val client = OkHttpClient()
         private var webSocket: WebSocket? = null
@@ -161,14 +178,20 @@ class DrinkerActivity : AppCompatActivity() {
                 override fun onMessage(webSocket: WebSocket, text: String) {
                     Log.d("WebSocket", "Mensaje recibido: $text")
                     activity.runOnUiThread {
-                        val newData = mutableListOf<DrinkerInfo>()
-                        val currentData = activity.adapter.drinkerInfoList
-                        if (text.contains("agua")) {
-                            newData.add(DrinkerInfo("Agua:", text))
-                            newData.add(currentData.find { it.label == "Gato Cercano:" } ?: DrinkerInfo("Gato Cercano:", "Unknown"))
-                        } else if (text.contains("gato")) {
-                            newData.add(currentData.find { it.label == "Agua:" } ?: DrinkerInfo("Agua:", "Unknown"))
-                            newData.add(DrinkerInfo("Gato Cercano:", text))
+                        val newData = mutableListOf<LitterBoxInfo>()
+                        val currentData = activity.adapter.litterBoxInfoList
+                        if (text.contains("cleaning")) {
+                            newData.add(LitterBoxInfo("Cleaning Interval:", text))
+                            newData.add(currentData.find { it.label == "Usage Status:" } ?: LitterBoxInfo("Usage Status:", "Unknown"))
+                            newData.add(currentData.find { it.label == "Last Cleaned:" } ?: LitterBoxInfo("Last Cleaned:", "Unknown"))
+                        } else if (text.contains("usage")) {
+                            newData.add(currentData.find { it.label == "Cleaning Interval:" } ?: LitterBoxInfo("Cleaning Interval:", activity.deviceCategory.cleaningInterval ?: "N/A"))
+                            newData.add(LitterBoxInfo("Usage Status:", text))
+                            newData.add(currentData.find { it.label == "Last Cleaned:" } ?: LitterBoxInfo("Last Cleaned:", "Unknown"))
+                        } else if (text.contains("last_cleaned")) {
+                            newData.add(currentData.find { it.label == "Cleaning Interval:" } ?: LitterBoxInfo("Cleaning Interval:", activity.deviceCategory.cleaningInterval ?: "N/A"))
+                            newData.add(currentData.find { it.label == "Usage Status:" } ?: LitterBoxInfo("Usage Status:", "Unknown"))
+                            newData.add(LitterBoxInfo("Last Cleaned:", text))
                         }
                         activity.adapter.updateData(newData)
                     }

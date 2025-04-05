@@ -40,7 +40,7 @@
             android:id="@+id/nameLitterBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nombre del Bebedero"
+            android:text="Nombre del Comedor"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -128,10 +128,10 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView
-                android:id="@+id/tv_agua"
+                android:id="@+id/tv_pz"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Hay Agua"
+                android:text="Peso del Tazon"
                 android:background="#F6DCEE"
                 android:padding="12dp"
                 android:textColor="@color/black"
@@ -141,16 +141,16 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_estaono" />
 
             <TextView
-                android:id="@+id/tv_va"
+                android:id="@+id/tv_vpz"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="v_a"
+                android:text="v_pz"
                 android:background="#F6DCEE"
                 android:padding="12dp"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@id/tv_agua"
+                app:layout_constraintStart_toEndOf="@id/tv_pz"
                 app:layout_constraintTop_toBottomOf="@id/tv_estaono4"
                 app:layout_constraintEnd_toEndOf="parent" />
 
@@ -167,7 +167,7 @@
                 android:layout_marginStart="25dp"
                 app:backgroundTint="@null"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_va"
+                app:layout_constraintTop_toBottomOf="@+id/tv_vpz"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
 
