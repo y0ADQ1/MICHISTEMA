@@ -55,6 +55,11 @@ class RegisterActivity : AppCompatActivity() {
                     val registerResponse = response.body()
                     if (registerResponse != null) {
                         Toast.makeText(this@RegisterActivity, "Registro exitoso", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(this@RegisterActivity, "Error en el registro", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this@RegisterActivity, "Error en el registro: ${response.message()}", Toast.LENGTH_SHORT).show()

@@ -15,38 +15,40 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceDetailAreneroBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
+        setContentView(binding.root)
+        val deviceId = intent.getIntExtra("device_id", -1)
+        val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
+        val environmentId = intent.getIntExtra("environment_id", -1)
+        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
+        val userId = intent.getIntExtra("user_id", -1)
+
+        if (deviceId != -1) {
+            loadDeviceDetails(deviceId, deviceName)
         }
 
-        // Botón para limpiar la vista
+        // Botón para regresar (ajusta esto a la actividad previa que realmente quieres abrir)
+        val btnBack: Button = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Esto simplemente cierra esta actividad y vuelve a la anterior
+        }
+
+        // Botón para limpieza normal
         val limpiar = findViewById<Button>(R.id.btn1)
         limpiar.setOnClickListener {
             enviarMensaje("motor-limpieza", "normal")
         }
 
-        // Nuevo botón para enviar otro topic
+        // Botón para limpieza completa
         val limpiarCompleto = findViewById<Button>(R.id.btn2)
         limpiarCompleto.setOnClickListener {
             enviarMensaje("motor-limpieza", "completa")
         }
 
+        // Botón para rellenar arena
         val relleno = findViewById<Button>(R.id.btn3)
         relleno.setOnClickListener {
             enviarMensaje("motor-limpieza", "relleno")
-        }
-
-
-        // Recibir el ID y el nombre del dispositivo
-        val deviceId = intent.getIntExtra("device_id", -1)
-        val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
-
-        if (deviceId != -1) {
-            loadDeviceDetails(deviceId, deviceName)
         }
     }
 
@@ -59,12 +61,10 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
         val messageSender = MessageSender()
         messageSender.enviarMensaje(topic, payload,
             onResponse = { response ->
-                // Aquí puedes manejar la respuesta del servidor si es necesario
-                println(response)
+                println("Respuesta: $response")
             },
             onError = { error ->
-                // Aquí puedes manejar el error si es necesario
-                println(error)
+                println("Error: $error")
             })
     }
 }

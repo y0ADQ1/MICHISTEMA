@@ -8,7 +8,6 @@ import com.example.michistema.R
 import com.example.michistema.databinding.ActivityDeviceDetailBebederoBinding
 import com.example.michistema.utils.MessageSender
 
-
 class DeviceDetailBebederoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeviceDetailBebederoBinding
@@ -18,19 +17,21 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding = ActivityDeviceDetailBebederoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
-        }
-
-
-        // Recibir el ID y el nombre del dispositivo
+        setContentView(binding.root)
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
+        val environmentId = intent.getIntExtra("environment_id", -1)
+        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
+        val userId = intent.getIntExtra("user_id", -1)
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
+        }
+
+        // Botón para regresar (ajusta esto a la actividad previa que realmente quieres abrir)
+        val btnBack: Button = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Esto simplemente cierra esta actividad y vuelve a la anterior
         }
     }
 
@@ -39,16 +40,13 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
     }
 
-
     private fun enviarMensaje(topic: String, payload: String) {
         val messageSender = MessageSender()
         messageSender.enviarMensaje(topic, payload,
             onResponse = { response ->
-                // Aquí puedes manejar la respuesta del servidor si es necesario
                 println(response)
             },
             onError = { error ->
-                // Aquí puedes manejar el error si es necesario
                 println(error)
             })
     }
