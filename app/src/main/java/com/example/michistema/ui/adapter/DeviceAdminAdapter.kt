@@ -38,7 +38,6 @@ class DeviceAdminAdapter(
     class DeviceAdminViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.txt_nombre_dispositivo)
         private val stateTextView: TextView = itemView.findViewById(R.id.txt_estado_dispositivo)
-        private val stateIcon: ImageView = itemView.findViewById(R.id.img_estado)
         private val disableButton: Button = itemView.findViewById(R.id.btn_disable)
         private val enableButton: Button = itemView.findViewById(R.id.btn_aviable)
         private val deleteButton: Button = itemView.findViewById(R.id.btn_delete)

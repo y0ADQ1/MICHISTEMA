@@ -24,44 +24,43 @@ class HomePageViewModel(private val apiService: ApiService) : ViewModel() {
             try {
                 val response = apiService.getEnvironmentsByUserId(userId)
                 if (response.isSuccessful) {
-                    _environments.postValue(response.body() ?: emptyList())
-                    Log.d("HomePageViewModel", "Environments loaded: ${response.body()?.size} items")
+                    val envs = response.body() ?: emptyList()
+                    Log.d("HomePageViewModel", "Entornos cargados: ${envs.size} items, Colores: ${envs.map { it.color }}")
+                    _environments.postValue(envs)
                 } else {
                     Log.e("HomePageViewModel", "Error: ${response.code()} - ${response.message()}")
                 }
             } catch (e: Exception) {
-                Log.e("HomePageViewModel", "Exception: ${e.message}", e)
+                Log.e("HomePageViewModel", "Excepción: ${e.message}", e)
             }
         }
     }
 
     // Crear un nuevo entorno en la API
-    fun addEnvironment(name: String, description: String, userId: Int, token: String) {
+    fun addEnvironment(name: String, description: String, userId: Int, token: String, color: String? = null) {
         viewModelScope.launch {
             try {
                 val request = CreateEnvironmentRequest(
                     name = name,
-                    color = "#FF0000", // Example color, adjust as needed
-                    active = true,     // Default to active, adjust as needed
-                    userId = userId    // Pass the userId from the activity
+                    color = color ?: "#FF0000", // Usa el color recibido o un valor por defecto
+                    active = true,
+                    userId = userId
                 )
+                Log.d("HomePageViewModel", "Enviando solicitud: name=$name, color=$color, userId=$userId")
                 val response = apiService.createEnvironment("Bearer $token", request)
                 if (response.isSuccessful) {
-                    val newEnvironment = response.body()?.environment // Extract the environment from the response
-                    newEnvironment?.let {
-                        val updatedList = _environments.value.orEmpty().toMutableList()
-                        updatedList.add(it)
-                        _environments.postValue(updatedList)
-                    }
-                    Log.d("HomePageViewModel", "Environment added: ${newEnvironment?.name}")
+                    Log.d("HomePageViewModel", "Entorno creado: ${response.body()?.environment?.name}, Color: ${response.body()?.environment?.color}")
+                    // Recarga la lista completa desde la API
+                    loadEnvironments(userId, token)
                 } else {
-                    Log.e("HomePageViewModel", "Failed to add environment: ${response.code()} - ${response.message()}")
+                    Log.e("HomePageViewModel", "Error al añadir entorno: ${response.code()} - ${response.message()}")
                 }
             } catch (e: Exception) {
-                Log.e("HomePageViewModel", "Exception adding environment: ${e.message}", e)
+                Log.e("HomePageViewModel", "Excepción al añadir entorno: ${e.message}", e)
             }
         }
     }
+
     fun onAddEnvironmentClicked() {
         _navigateToAddEnvironment.postValue(true)
     }

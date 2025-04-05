@@ -113,7 +113,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="@drawable/gradient_button_back"
+                    android:background="@color/blue_700"
                     android:stateListAnimator="@animator/button_elevation"
                     android:text="Agregar Dispositivo"
                     android:id="@+id/btnAgregarDispositivo"

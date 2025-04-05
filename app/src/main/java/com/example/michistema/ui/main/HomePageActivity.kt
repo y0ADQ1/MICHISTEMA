@@ -31,13 +31,27 @@ class HomePageActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             val newEnvironment = result.data?.getStringExtra("new_environment")
-            val environmentColor = result.data?.getStringExtra("environment_color") // Recibir el color
+            val environmentColor = result.data?.getStringExtra("environment_color")
 
             if (!newEnvironment.isNullOrEmpty() && !environmentColor.isNullOrEmpty()) {
-                viewModel.addEnvironment(newEnvironment, "Nueva Descripción", userId, token)
-                loadEnvironmentsFromApi()
+                Log.d("HomePageActivity", "Añadiendo entorno: $newEnvironment, Color: $environmentColor")
+                viewModel.addEnvironment(
+                    name = newEnvironment,
+                    description = "Nueva Descripción",
+                    userId = userId,
+                    token = token,
+                    color = environmentColor
+                )
+                // loadEnvironmentsFromApi() ya no es necesario aquí porque se llama en addEnvironment
+            } else {
+                Log.e("HomePageActivity", "Nombre o color nulo: $newEnvironment, $environmentColor")
             }
         }
+    }
+
+    private fun loadEnvironmentsFromApi() {
+        viewModel.loadEnvironments(userId, token)
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -93,9 +107,6 @@ class HomePageActivity : AppCompatActivity() {
         loadEnvironmentsFromApi()
     }
 
-    private fun loadEnvironmentsFromApi() {
-        viewModel.loadEnvironments(userId, token)
-    }
 }
 
 class ViewModelFactory(private val apiService: ApiService) : ViewModelProvider.Factory {

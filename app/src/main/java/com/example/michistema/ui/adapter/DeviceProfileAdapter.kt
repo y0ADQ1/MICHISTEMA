@@ -38,7 +38,6 @@ class DeviceProfileAdapter(
     class DeviceProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val nameTextView: TextView = itemView.findViewById(R.id.txt_nombre_dispositivo)
         private val stateTextView: TextView = itemView.findViewById(R.id.txt_estado_dispositivo)
-        private val stateIcon: ImageView = itemView.findViewById(R.id.img_estado)
         private val disableButton: Button = itemView.findViewById(R.id.btn_disable)
         private val enableButton: Button = itemView.findViewById(R.id.btn_aviable)
         private val deleteButton: Button = itemView.findViewById(R.id.btn_delete)
@@ -57,9 +56,6 @@ class DeviceProfileAdapter(
                 )
             )
             // Optional: Set the state icon
-            stateIcon.setImageResource(
-                if (device.active) R.drawable.ic_more else R.drawable.ic_more
-            )
 
             disableButton.setOnClickListener { onDisableClick(device) }
             enableButton.setOnClickListener { onEnableClick(device) }

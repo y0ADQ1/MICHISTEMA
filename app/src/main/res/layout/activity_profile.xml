@@ -121,7 +121,7 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:background="@drawable/gradient_button_back"
+                        android:background="@color/green_700"
                         android:stateListAnimator="@animator/button_elevation"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="16dp" />
@@ -155,8 +155,8 @@
                         android:text="Guardar Email"
                         android:textSize="16sp"
                         android:textStyle="bold"
+                        android:background="@color/green_700"
                         android:textColor="@android:color/white"
-                        android:background="@drawable/gradient_button_back"
                         android:stateListAnimator="@animator/button_elevation"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="16dp" />
@@ -189,10 +189,10 @@
                         android:layout_height="wrap_content"
                         android:text="Guardar Contraseña"
                         android:textSize="16sp"
+                        android:background="@color/green_700"
+
                         android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:layout_marginTop="40dp"
-                        android:background="@drawable/gradient_button_back"
                         android:stateListAnimator="@animator/button_elevation"
                         app:backgroundTint="@null"
                         android:layout_marginBottom="8dp" />
@@ -204,6 +204,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:text="Mis Dispositivos"
+                        android:layout_marginTop="40dp"
+
                         android:textSize="16sp"
                         android:layout_marginBottom="8dp"
                         android:textStyle="bold"
