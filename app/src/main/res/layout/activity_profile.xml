@@ -208,7 +208,7 @@
                         android:layout_marginBottom="8dp"
                         android:textStyle="bold"
                         android:textColor="@android:color/white"
-                        android:background="@drawable/gradient_button_back"
+                        android:background="@color/blue_A400"
                         android:stateListAnimator="@animator/button_elevation"
                         app:backgroundTint="@null" />
 
