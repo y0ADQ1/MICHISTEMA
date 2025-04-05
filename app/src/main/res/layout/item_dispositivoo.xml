@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="4dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@android:color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:background="?android:attr/selectableItemBackground">
+
+        <!-- Imagen del dispositivo -->
+        <ImageView
+            android:id="@+id/img_dispositivo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/noun_litter_box_6692365"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Nombre del dispositivo -->
+        <TextView
+            android:id="@+id/txt_nombre_dispositivo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Dispositivo XYZ"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/img_dispositivo"
+            app:layout_constraintTop_toTopOf="@id/img_dispositivo"
+            app:layout_constraintEnd_toStartOf="@id/img_estado" />
+
+        <!-- Estado del dispositivo -->
+        <TextView
+            android:id="@+id/txt_estado_dispositivo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Conectado"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_green_dark"
+            app:layout_constraintStart_toStartOf="@id/txt_nombre_dispositivo"
+            app:layout_constraintTop_toBottomOf="@id/txt_nombre_dispositivo"
+            app:layout_constraintEnd_toEndOf="@id/txt_nombre_dispositivo" />
+
+        <!-- Imagen de estado -->
+        <ImageView
+            android:id="@+id/img_estado"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/txt_estado_dispositivo" />
+
+        <!-- Botón Deshabilitar -->
+        <Button
+            android:id="@+id/btn_disable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Deshabilitar"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/gradient_button_back"
+            android:stateListAnimator="@animator/button_elevation"
+            app:backgroundTint="@null"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/txt_estado_dispositivo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Botón Habilitar -->
+        <Button
+            android:id="@+id/btn_aviable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Habilitar"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/gradient_button_back"
+            android:stateListAnimator="@animator/button_elevation"
+            app:backgroundTint="@null"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_disable"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Botón Eliminar -->
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Eliminar"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/gradient_button_back"
+            android:stateListAnimator="@animator/button_elevation"
+            app:backgroundTint="@null"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/btn_aviable"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>
