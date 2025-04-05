@@ -39,6 +39,7 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
     }
 
+
     private fun enviarMensaje(topic: String, payload: String) {
         val messageSender = MessageSender()
         messageSender.enviarMensaje(topic, payload,
