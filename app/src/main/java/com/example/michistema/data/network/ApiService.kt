@@ -92,7 +92,7 @@ interface ApiService {
         ): Response<CreateEnvironmentResponse>
 
 
-    @GET("users/{userId}/devices")
+    @GET("device/{userId}/devices")
     suspend fun getDevicesByUserId(@Path("userId") userId: Int): Response<List<Device>>
 
     @POST("device/asignar/{userId}/{deviceId}/{environmentId}")

@@ -122,28 +122,40 @@ class EnvironmentDetailActivity : AppCompatActivity() {
     }
 
     private fun showDeviceIdInputDialog(userId: Int) {
-        val editText = EditText(this)
-        editText.hint = "Ingrese el ID del dispositivo"
+        // Llamar a la API para obtener los dispositivos disponibles
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = apiService.getDevices()
+                if (response.isSuccessful) {
+                    val devices = response.body() ?: emptyList()
+                    withContext(Dispatchers.Main) {
+                        // Crear una lista de nombres con ID de dispositivo
+                        val deviceNames = devices.map { "${it.name}" }
 
-        AlertDialog.Builder(this)
-            .setTitle("Vincular Dispositivo")
-            .setView(editText)
-            .setPositiveButton("Vincular") { _, _ ->
-                val deviceIdText = editText.text.toString()
-                if (deviceIdText.isNotEmpty()) {
-                    val deviceId = deviceIdText.toIntOrNull()
-                    if (deviceId != null && deviceId > 0) {
-                        assignDeviceToUser(userId, deviceId)
-                    } else {
-                        Toast.makeText(this, "ID inválido, debe ser un número positivo", Toast.LENGTH_SHORT).show()
+                        // Crear un AlertDialog con una lista de dispositivos
+                        AlertDialog.Builder(this@EnvironmentDetailActivity)
+                            .setTitle("Seleccionar Dispositivo")
+                            .setItems(deviceNames.toTypedArray()) { _, position ->
+                                val selectedDevice = devices[position]
+                                assignDeviceToUser(userId, selectedDevice.id) // Vincular el dispositivo seleccionado
+                            }
+                            .setNegativeButton("Cancelar", null)
+                            .show()
                     }
                 } else {
-                    Toast.makeText(this, "Por favor, ingrese un ID", Toast.LENGTH_SHORT).show()
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@EnvironmentDetailActivity, "Error al cargar dispositivos", Toast.LENGTH_SHORT).show()
+                    }
                 }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@EnvironmentDetailActivity, "Excepción al cargar dispositivos: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+                Log.e("API_ERROR", "Excepción: ${e.message}")
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+        }
     }
+
 
     private fun assignDeviceToUser(userId: Int, deviceId: Int) {
         if (environmentId == -1) {

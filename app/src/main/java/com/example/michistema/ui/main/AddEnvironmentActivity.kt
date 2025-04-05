@@ -33,8 +33,7 @@ class AddEnvironmentActivity : AppCompatActivity() {
                 viewModel.setSelectedEnvironment(environments[position])
             }
 
-            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {
-            }
+            override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
         })
 
         binding.etSecondaryName.addTextChangedListener(object : android.text.TextWatcher {
@@ -58,6 +57,7 @@ class AddEnvironmentActivity : AppCompatActivity() {
                 .setColorListener(object : ColorListener {
                     override fun onColorSelected(color: Int, colorHex: String) {
                         viewModel.setSelectedColor(colorHex)
+                        binding.btnChooseColor.setBackgroundColor(android.graphics.Color.parseColor(colorHex))
                     }
                 })
                 .build()
@@ -86,6 +86,7 @@ class AddEnvironmentActivity : AppCompatActivity() {
 
             val resultIntent = Intent()
             resultIntent.putExtra("new_environment", newEnvironment)
+            resultIntent.putExtra("environment_color", color)  // Enviar el color
             setResult(Activity.RESULT_OK, resultIntent)
             finish()
         }

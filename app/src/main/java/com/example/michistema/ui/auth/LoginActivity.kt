@@ -33,11 +33,12 @@ class LoginActivity : AppCompatActivity() {
             login()
         }
 
+        /*
         binding.btnForgotPassword.setOnClickListener {
             val intent = Intent(this, ForgotPasswordActivity::class.java)
             startActivity(intent)
         }
-
+*/
         binding.tvLoginTitle3.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)

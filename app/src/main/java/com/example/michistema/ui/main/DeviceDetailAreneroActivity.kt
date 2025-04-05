@@ -24,16 +24,22 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
         }
 
         // Botón para limpiar la vista
-        val limpiar = findViewById<Button>(R.id.btn_limpiar)
+        val limpiar = findViewById<Button>(R.id.btn1)
         limpiar.setOnClickListener {
-            enviarMensaje("mover-motor", "100")
+            enviarMensaje("motor-limpieza", "normal")
         }
 
         // Nuevo botón para enviar otro topic
-        val limpiarCompleto = findViewById<Button>(R.id.btn_limpiar_completo)
+        val limpiarCompleto = findViewById<Button>(R.id.btn2)
         limpiarCompleto.setOnClickListener {
-            enviarMensaje("otro-topic", "200")
+            enviarMensaje("motor-limpieza", "completa")
         }
+
+        val relleno = findViewById<Button>(R.id.btn3)
+        relleno.setOnClickListener {
+            enviarMensaje("motor-limpieza", "relleno")
+        }
+
 
         // Recibir el ID y el nombre del dispositivo
         val deviceId = intent.getIntExtra("device_id", -1)

@@ -15,7 +15,7 @@ class MessageSender {
 
     fun enviarMensaje(topic: String, payload: String, onResponse: (String) -> Unit, onError: (String) -> Unit) {
         val client = OkHttpClient()
-        val url = "http://189.145.66.247:18083/api/v5/publish"
+        val url = "http://189.244.34.160:18083/api/v5/publish"
 
         // Tus credenciales
         val username = "aae9de2837a66715"

@@ -16,7 +16,6 @@ import com.example.michistema.ui.adapter.EnvironmentAdapter
 import com.example.michistema.utils.PreferenceHelper
 import com.example.michistema.viewmodel.HomePageViewModel
 
-
 class HomePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomePageBinding
@@ -31,8 +30,11 @@ class HomePageActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.getStringExtra("new_environment")?.let {
-                viewModel.addEnvironment(it, "Nueva Descripción", userId, token)
+            val newEnvironment = result.data?.getStringExtra("new_environment")
+            val environmentColor = result.data?.getStringExtra("environment_color") // Recibir el color
+
+            if (!newEnvironment.isNullOrEmpty() && !environmentColor.isNullOrEmpty()) {
+                viewModel.addEnvironment(newEnvironment, "Nueva Descripción", userId, token)
                 loadEnvironmentsFromApi()
             }
         }
@@ -47,17 +49,15 @@ class HomePageActivity : AppCompatActivity() {
         token = preferences.getString("token", "") ?: ""
         userId = preferences.getInt("userId", 0)
 
-        // Inicializa ApiService
         apiService = NetworkClient.retrofit.create(ApiService::class.java)
 
-        // Inicializa ViewModel con ApiService
         viewModel = ViewModelProvider(this, ViewModelFactory(apiService)).get(HomePageViewModel::class.java)
 
         adapter = EnvironmentAdapter(emptyList()) { environment ->
             val intent = Intent(this, EnvironmentDetailActivity::class.java).apply {
                 putExtra("environment_name", environment.name)
                 putExtra("environment_id", environment.id)
-                putExtra("user_id", userId) // Enviar userId como Int al EnvironmentDetailActivity
+                putExtra("user_id", userId)
             }
             startActivity(intent)
         }
@@ -72,38 +72,24 @@ class HomePageActivity : AppCompatActivity() {
             Log.d("HomePageActivity", "Environments updated: ${environments.size} items")
         }
 
-        viewModel.navigateToAddEnvironment.observe(this) { navigate ->
-            if (navigate) {
-                val intent = Intent(this, AddEnvironmentActivity::class.java)
-                addEnvironmentLauncher.launch(intent)
-                viewModel.onNavigationHandled()
-            }
-        }
-
-        // Single click listener for btnMyProfile
         binding.btnMyProfile.setOnClickListener {
-            if (userId != 0 && token.isNotEmpty()) { // Check if userId and token are valid
+            if (userId != 0 && token.isNotEmpty()) {
                 val intent = Intent(this, ProfileActivity::class.java).apply {
-                    putExtra("user_id", userId) // Enviar userId como Int al ProfileActivity
+                    putExtra("user_id", userId)
                     putExtra("token", token)
                 }
                 startActivity(intent)
-                Log.d("HomePageActivity", "Navigating to ProfileActivity with userId: $userId, token: $token")
-            } else {
-                Log.e("HomePageActivity", "Invalid userId or token: userId=$userId, token=$token")
             }
         }
 
         binding.btnAddEnvirement.setOnClickListener {
-            viewModel.onAddEnvironmentClicked()
+            addEnvironmentLauncher.launch(Intent(this, AddEnvironmentActivity::class.java))
         }
 
-        // Configuración de SwipeRefreshLayout
         binding.swipeRefreshLayout.setOnRefreshListener {
-            loadEnvironmentsFromApi() // Recargar entornos desde la API
+            loadEnvironmentsFromApi()
         }
 
-        // Cargar entornos desde la API al iniciar
         loadEnvironmentsFromApi()
     }
 
@@ -112,7 +98,6 @@ class HomePageActivity : AppCompatActivity() {
     }
 }
 
-// Factory para pasar ApiService al ViewModel
 class ViewModelFactory(private val apiService: ApiService) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomePageViewModel::class.java)) {
