@@ -1,6 +1,7 @@
 package com.example.michistema.ui.main
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -17,21 +18,24 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding = ActivityDeviceDetailBebederoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setContentView(binding.root)
+        val btnBack: Button = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            val intent = Intent(this, HomePageActivity::class.java)
+            startActivity(intent)
+        }
+
+        // Recibir el ID y el nombre del dispositivo
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
-        val environmentId = intent.getIntExtra("environment_id", -1)
-        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
-        val userId = intent.getIntExtra("user_id", -1)
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
-        }
 
-        // Botón para regresar (ajusta esto a la actividad previa que realmente quieres abrir)
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            finish() // Esto simplemente cierra esta actividad y vuelve a la anterior
+            // Simulación de estado (debes reemplazarlo con tus datos reales)
+            val gatoPresente: Boolean? = null  // null si no hay datos
+            val hayAgua: Boolean? = null       // null si no hay datos
+
+            actualizarIndicadores(gatoPresente, hayAgua)
         }
     }
 
@@ -49,5 +53,27 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
             onError = { error ->
                 println(error)
             })
+    }
+
+    private fun actualizarIndicadores(gatoPresente: Boolean?, hayAgua: Boolean?) {
+        val gris = Color.GRAY
+        val rojo = Color.RED
+        val verde = Color.GREEN
+
+        // Indicador de proximidad
+        val colorProximidad = when (gatoPresente) {
+            true -> rojo         // gato presente
+            false -> verde       // sin gato
+            null -> gris         // sin datos
+        }
+        binding.statusProximidad.setBackgroundColor(colorProximidad)
+
+        // Indicador de agua
+        val colorAgua = when (hayAgua) {
+            true -> verde        // hay agua
+            false -> rojo        // no hay agua
+            null -> gris         // sin datos
+        }
+        binding.statusAgua.setBackgroundColor(colorAgua)
     }
 }
