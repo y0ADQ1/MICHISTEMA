@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkClient {
     //url ed android local
-    private const val BASE_URL = "http://189.244.34.160:3004/v1/api/"
+    private const val BASE_URL = "http://10.0.2.2:3333/v1/api/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY // Para depurar

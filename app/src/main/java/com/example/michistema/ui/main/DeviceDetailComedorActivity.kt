@@ -19,18 +19,22 @@ class DeviceDetailComedorActivity : AppCompatActivity() {
         binding = ActivityDeviceDetailComedorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            val intent = Intent(this, HomePageActivity::class.java)
-            startActivity(intent)
-        }
 
-        // Recibir el ID y el nombre del dispositivo
+        // Obtener datos del intent
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
+        val environmentId = intent.getIntExtra("environment_id", -1)
+        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
+        val userId = intent.getIntExtra("user_id", -1)
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
+        }
+
+        // Botón para regresar a la actividad anterior
+        val btnBack: Button = findViewById(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Simplemente vuelve a la actividad anterior
         }
 
         val btnMotor1: Button = findViewById(R.id.btn1)
@@ -53,10 +57,10 @@ class DeviceDetailComedorActivity : AppCompatActivity() {
         val messageSender = MessageSender()
         messageSender.enviarMensaje(topic, payload,
             onResponse = { response ->
-                println(response)
+                println("Respuesta: $response")
             },
             onError = { error ->
-                println(error)
+                println("Error: $error")
             })
     }
 }

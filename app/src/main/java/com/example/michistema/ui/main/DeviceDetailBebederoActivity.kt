@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.michistema.R
 import com.example.michistema.databinding.ActivityDeviceDetailBebederoBinding
 import com.example.michistema.utils.MessageSender
+import org.json.JSONObject
 
 class DeviceDetailBebederoActivity : AppCompatActivity() {
 
@@ -32,13 +33,51 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         btnBack.setOnClickListener {
             finish() // Simplemente vuelve a la actividad anterior
         }
-
-
     }
 
     private fun loadDeviceDetails(deviceId: Int, deviceName: String) {
         binding.txtDeviceId.text = "ID del Dispositivo: $deviceId"
         binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
+    }
+
+    private fun procesarMensaje(mensaje: String) {
+        try {
+            val json = JSONObject(mensaje)
+            val topic = json.getString("topic")
+            val message = json.getString("message") // El valor de la distancia en cm
+
+            // Convertimos el mensaje a un valor numérico (float o double)
+            val distancia = message.toFloatOrNull() // Convertimos a float, si no es posible, regresa null
+
+            // Solo procesamos si la distancia es válida
+            if (distancia != null) {
+                when (topic) {
+                    "ultrasonic-water" -> {
+                        // Si la distancia es menor a 5 cm, cambiamos el color a verde, si no, a rojo
+                        if (distancia < 5) {
+                            binding.statusProximidad.setBackgroundResource(R.drawable.circle_green)
+                        } else {
+                            binding.statusProximidad.setBackgroundResource(R.drawable.circle_red)
+                        }
+                    }
+                    "sensor-water" -> {
+                        // Ejemplo para otro sensor, si quieres añadir más lógica
+                        if (message == "normal") {
+                            binding.statusAgua.setBackgroundResource(R.drawable.circle_green)
+                        } else {
+                            binding.statusAgua.setBackgroundResource(R.drawable.circle_red)
+                        }
+                    }
+                    else -> {
+                        println("Topic desconocido")
+                    }
+                }
+            } else {
+                println("La distancia recibida no es válida: $message")
+            }
+        } catch (e: Exception) {
+            println("Error al procesar JSON: ${e.message}")
+        }
     }
 
     private fun enviarMensaje(topic: String, payload: String) {

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="113dp"
-    android:layout_height="220dp"
+    android:layout_height="180dp"
     android:background="@color/pink_100"
     android:padding="1dp"
     android:layout_margin="8dp">
@@ -45,20 +45,5 @@
         app:layout_constraintStart_toStartOf="@id/txtDeviceName"
         app:layout_constraintTop_toBottomOf="@id/txtDeviceName"
         app:layout_constraintEnd_toEndOf="@id/txtDeviceName" />
-
-    <Button
-        android:id="@+id/viewMoreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/gradient_button_back"
-        android:stateListAnimator="@animator/button_elevation"
-        android:layout_marginTop="4dp"
-        android:text="Ver más"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        app:backgroundTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDeviceStatus" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
