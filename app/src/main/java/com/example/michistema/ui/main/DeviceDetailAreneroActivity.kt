@@ -1,6 +1,7 @@
 package com.example.michistema.ui.main
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
@@ -40,13 +41,16 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
             enviarMensaje("motor-limpieza", "relleno")
         }
 
-
         // Recibir el ID y el nombre del dispositivo
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
+
+            // Simulación de estado (reemplaza con datos reales)
+            val gatoPresente: Boolean? = null  // null si no hay datos
+            actualizarIndicadorProximidad(gatoPresente)
         }
     }
 
@@ -66,5 +70,19 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
                 // Aquí puedes manejar el error si es necesario
                 println(error)
             })
+    }
+
+    private fun actualizarIndicadorProximidad(gatoPresente: Boolean?) {
+        val gris = Color.GRAY
+        val rojo = Color.RED
+        val verde = Color.GREEN
+
+        // Indicador de proximidad
+        val colorProximidad = when (gatoPresente) {
+            true -> rojo         // gato presente
+            false -> verde       // sin gato
+            null -> gris         // sin datos
+        }
+        binding.statusProximidad.setBackgroundColor(colorProximidad)
     }
 }
