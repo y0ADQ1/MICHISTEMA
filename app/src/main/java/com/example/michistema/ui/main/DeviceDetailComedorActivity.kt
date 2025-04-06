@@ -31,7 +31,8 @@ class DeviceDetailComedorActivity : AppCompatActivity() {
             loadDeviceDetails(deviceId, deviceName)
         }
 
-        // Botón para regresar a la actividad anterior
+        // Botón para regresar a la actividad anterior.
+
         val btnBack: Button = findViewById(R.id.btnBack)
         btnBack.setOnClickListener {
             finish() // Simplemente vuelve a la actividad anterior
