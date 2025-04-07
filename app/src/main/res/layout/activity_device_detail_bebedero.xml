@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:text="ID: "
+                        android:text="Codigo del Dispositivo: "
                         android:textColor="#FFFFFF"
                         android:layout_marginBottom="8dp"/>
 

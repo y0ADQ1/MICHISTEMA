@@ -17,14 +17,13 @@ import java.util.concurrent.TimeUnit
 class DeviceDetailBebederoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeviceDetailBebederoBinding
-    private lateinit var webSocket: WebSocket  // Declaración de la variable webSocket
+    private lateinit var webSocket: WebSocket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceDetailBebederoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtener datos del intent
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
 
@@ -32,17 +31,15 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
             loadDeviceDetails(deviceId, deviceName)
         }
 
-        // Conectar WebSocket
         iniciarWebSocket()
 
-        // Botón para regresar
         findViewById<Button>(binding.btnBack.id).setOnClickListener {
             finish()
         }
     }
 
     private fun loadDeviceDetails(deviceId: Int, deviceName: String) {
-        binding.txtDeviceId.text = "ID del Dispositivo: $deviceId"
+        binding.txtDeviceId.text = "Codigo del Dispositivo: $deviceId"
         binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
     }
 
@@ -59,7 +56,7 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
             .build()
 
         val request = Request.Builder()
-            .url("ws://atenasoficial.com:3003") // Cambia si tu IP/host es otro
+            .url("ws://atenasoficial.com:3003")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {

@@ -30,7 +30,7 @@ class WebSocketService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        return START_STICKY // El servicio se reinicia si se mata
+        return START_STICKY
     }
 
     private fun iniciarWebSocket() {
@@ -75,13 +75,13 @@ class WebSocketService : Service() {
     }
 
     private fun handleProximity(distance: Float) {
-        if (distance < 10) { // Suponiendo que 10 cm indica que el gato está en el arenero
+        if (distance < 10) {
             if (!isCatPresent) {
                 proximityTime = System.currentTimeMillis()
                 isCatPresent = true
-            } else if (System.currentTimeMillis() - proximityTime >= 5000) { // 5 segundos
+            } else if (System.currentTimeMillis() - proximityTime >= 5000) {
                 sendNotification("Gato en arenero", "El gato ha estado en el arenero por 5 segundos.")
-                proximityTime = 0 // Reiniciar para evitar notificaciones repetidas
+                proximityTime = 0
             }
         } else {
             isCatPresent = false
@@ -90,7 +90,7 @@ class WebSocketService : Service() {
     }
 
     private fun handleGases(gasLevel: Float) {
-        val percentage = gasLevel / 1000 * 100 // Suponiendo 1000 ppm como 100%
+        val percentage = gasLevel / 1000 * 100
         when {
             percentage >= 100 -> sendNotification(
                 "Limpieza urgente",
@@ -135,7 +135,7 @@ class WebSocketService : Service() {
         )
 
         val notification = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Cambia por tu ícono
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)

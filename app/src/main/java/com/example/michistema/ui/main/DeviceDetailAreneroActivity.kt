@@ -30,14 +30,12 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
         iniciarWebSocket()
 
         if (deviceId != -1) {
-            binding.txtDeviceId.text = "ID del Dispositivo: $deviceId"
+            binding.txtDeviceId.text = "Codigo del Dispositivo: $deviceId"
             binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
         }
 
-        // Botón para regresar
         findViewById<Button>(R.id.btnBack).setOnClickListener { finish() }
 
-        // Botones de control
         findViewById<Button>(R.id.btn1).setOnClickListener {
             enviarMensaje("arenero-motor", "normal")
         }
@@ -57,7 +55,7 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
             .build()
 
         val request = Request.Builder()
-            .url("ws://atenasoficial.com:3003") // Dirección IP del servidor
+            .url("ws://atenasoficial.com:3003")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {

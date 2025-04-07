@@ -10,7 +10,6 @@
     android:padding="16dp"
     tools:context=".ui.main.DeviceDetailComedorActivity">
 
-    <!-- Top Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerBar"
         android:layout_width="match_parent"
@@ -52,7 +51,6 @@
             app:layout_constraintHorizontal_bias="2.5"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Contenido -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/outerContainer"
         android:layout_width="0dp"
@@ -85,14 +83,13 @@
                     android:padding="8dp"
                     android:gravity="center_horizontal">
 
-                    <!-- ID y nombre -->
                     <TextView
                         android:id="@+id/txtDeviceId"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:text="ID del Dispositivo"
+                        android:text="Codigo del Dispositivo"
                         android:textColor="#FFFFFF"
                         android:layout_marginBottom="8dp"/>
 
@@ -106,7 +103,6 @@
                         android:textColor="#FFFFFF"
                         android:layout_marginBottom="16dp"/>
 
-                    <!-- Presencia del gato -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -136,7 +132,6 @@
                             android:textSize="18sp" />
                     </LinearLayout>
 
-                    <!-- Sensor de peso -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -167,7 +162,6 @@
 
                     </LinearLayout>
 
-                    <!-- Botones -->
                     <Button
                         android:id="@+id/btn1"
                         android:layout_width="match_parent"
