@@ -117,52 +117,24 @@
                         android:clipChildren="false">
 
                         <TextView
-                            android:id="@+id/txtProximidad"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Proximidad: sin detectar"
-                            android:textColor="#FFFFFF"
-                            android:textSize="18sp" />
-
-                        <View
-                            android:id="@+id/statusProximidad"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/status_indicator"
-                            android:visibility="visible"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="12dp"
-                        android:background="#DCA1CC"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center_vertical"
-                        android:layout_marginHorizontal="8dp"
-                        android:elevation="4dp"
-                        android:clipToPadding="false"
-                        android:clipChildren="false">
-
-                        <TextView
                             android:id="@+id/txtAgua"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Estado del Agua: desconocido"
+                            android:text="Estado del Bebedero: "
                             android:textColor="#FFFFFF"
                             android:textSize="18sp" />
 
-                        <View
-                            android:id="@+id/statusAgua"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/status_indicator"
-                            android:visibility="visible"/>
+                        <TextView
+                            android:id="@+id/txtAguavalor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Agua"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
+
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>

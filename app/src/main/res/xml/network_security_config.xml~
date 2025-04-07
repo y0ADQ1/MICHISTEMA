@@ -4,6 +4,9 @@
         <domain includeSubdomains="true">10.0.2.2</domain>
         <domain-config>
             <domain includeSubdomains="true">atenasoficial.com</domain>
+            <trust-anchors>
+                <certificates src="@raw/certificado" />
+            </trust-anchors>
         </domain-config>
     </domain-config>
 </network-security-config>

@@ -15,11 +15,11 @@ class MessageSender {
 
     fun enviarMensaje(topic: String, payload: String, onResponse: (String) -> Unit, onError: (String) -> Unit) {
         val client = OkHttpClient()
-        val url = "http://189.244.34.160:18083/api/v5/publish"
+        val url = "http://atenasoficial.com:18083/api/v5/publish"
 
         // Tus credenciales
-        val username = "aae9de2837a66715"
-        val password = "rOzl4UG7bSfHanTfM0raooVet8tbAdj9Cncm9AD0x8qZK"
+        val username = "a4abd4448c49562d"
+        val password = "8kwYazo9BWvOzNYmFTrC9CPSaFJ237hbjRhjBifrqnzHN"
 
         // Codificar en Base64 las credenciales
         val credentials = "$username:$password"

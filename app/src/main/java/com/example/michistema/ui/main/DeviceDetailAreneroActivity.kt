@@ -26,44 +26,29 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
 
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
-        val environmentId = intent.getIntExtra("environment_id", -1)
-        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
-        val userId = intent.getIntExtra("user_id", -1)
 
         iniciarWebSocket()
 
         if (deviceId != -1) {
-            loadDeviceDetails(deviceId, deviceName)
+            binding.txtDeviceId.text = "ID del Dispositivo: $deviceId"
+            binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
         }
 
         // Botón para regresar
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            finish() // Regresa a la actividad anterior
+        findViewById<Button>(R.id.btnBack).setOnClickListener { finish() }
+
+        // Botones de control
+        findViewById<Button>(R.id.btn1).setOnClickListener {
+            enviarMensaje("arenero-motor", "normal")
         }
 
-        // Botón para limpieza normal
-        val limpiar = findViewById<Button>(R.id.btn1)
-        limpiar.setOnClickListener {
-            enviarMensaje("motor-limpieza", "normal")
+        findViewById<Button>(R.id.btn2).setOnClickListener {
+            enviarMensaje("arenero-motor", "completa")
         }
 
-        // Botón para limpieza completa
-        val limpiarCompleto = findViewById<Button>(R.id.btn2)
-        limpiarCompleto.setOnClickListener {
-            enviarMensaje("motor-limpieza", "completa")
+        findViewById<Button>(R.id.btn3).setOnClickListener {
+            enviarMensaje("arenero-motor", "relleno")
         }
-
-        // Botón para rellenar arena
-        val relleno = findViewById<Button>(R.id.btn3)
-        relleno.setOnClickListener {
-            enviarMensaje("motor-limpieza", "relleno")
-        }
-    }
-
-    private fun loadDeviceDetails(deviceId: Int, deviceName: String) {
-        binding.txtDeviceId.text = "ID del Dispositivo: $deviceId"
-        binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
     }
 
     private fun iniciarWebSocket() {
@@ -72,7 +57,7 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
             .build()
 
         val request = Request.Builder()
-            .url("ws://189.244.34.160:3003")
+            .url("ws://atenasoficial.com:3003") // Dirección IP del servidor
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
@@ -103,10 +88,15 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
             val message = json.getString("message")
 
             when (topic) {
-                "sensor-mq2" -> binding.txtGases.text = "Gases: $message ppm"
-                "sensor-dht" -> binding.txtHumedad.text = "Humedad: $message %"
-                "sensor-ultrasonic" -> binding.txtProximidad.text = "Proximidad: $message cm"
-                // Agrega más casos según otros sensores
+                "sensor-mq2", "arenero-gas" -> {
+                    binding.txtGases.text = "Gases: $message ppm"
+                }
+                "sensor-dht", "arenero-temperatura" -> {
+                    binding.txtHumedad.text = "Humedad: $message %"
+                }
+                "sensor-ultrasonic", "arenero-ultrasonic" -> {
+                    binding.txtProximidad.text = "Proximidad: $message cm"
+                }
             }
         } catch (e: Exception) {
             println("Error al procesar JSON: ${e.message}")
@@ -124,9 +114,8 @@ class DeviceDetailAreneroActivity : AppCompatActivity() {
             })
     }
 
-    // Para cerrar el WebSocket cuando la actividad se destruye
     override fun onDestroy() {
         super.onDestroy()
-        webSocket.close(1000, "Actividad destruida") // Cierra el WebSocket al destruir la actividad
+        webSocket.close(1000, "Actividad destruida")
     }
 }

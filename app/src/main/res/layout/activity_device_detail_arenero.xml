@@ -161,7 +161,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
-                        android:text="Rellenar Arena: añade arena antes de realizar una limpieza."
+                        android:text="Cuando hayas rellenado el arenero, confirmalo con el botón de Arenero Relleno."
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"
                         android:paddingStart="12dp"
@@ -173,7 +173,7 @@
                         android:layout_height="48dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginHorizontal="16dp"
-                        android:text="Rellenar Arena"
+                        android:text="Arenero Relleno"
                         android:backgroundTint="#CC3CC6"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp"
@@ -206,12 +206,6 @@
                             android:text="Proximidad: -- cm"
                             android:textColor="#FFFFFF"
                             android:textSize="16sp" />
-
-                        <View
-                            android:id="@+id/statusProximidad"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:background="@drawable/status_indicator" />
                     </LinearLayout>
 
                     <TextView

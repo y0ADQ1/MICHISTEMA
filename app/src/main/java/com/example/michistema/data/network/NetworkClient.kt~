@@ -11,10 +11,11 @@ import java.security.cert.X509Certificate
 import javax.net.ssl.SSLContext
 
 object NetworkClient {
+    //url ed android local
     private const val BASE_URL = "http://atenasoficial.com:3004/v1/api/"
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
+        level = HttpLoggingInterceptor.Level.BODY 
     }
 
     private val okHttpClient = OkHttpClient.Builder()

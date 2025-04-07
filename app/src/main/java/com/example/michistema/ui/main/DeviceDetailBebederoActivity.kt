@@ -6,11 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.michistema.R
 import com.example.michistema.databinding.ActivityDeviceDetailBebederoBinding
 import com.example.michistema.utils.MessageSender
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import okhttp3.WebSocket
+import okhttp3.WebSocketListener
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 
 class DeviceDetailBebederoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDeviceDetailBebederoBinding
+    private lateinit var webSocket: WebSocket  // Declaración de la variable webSocket
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,18 +27,17 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         // Obtener datos del intent
         val deviceId = intent.getIntExtra("device_id", -1)
         val deviceName = intent.getStringExtra("device_name") ?: "Nombre no disponible"
-        val environmentId = intent.getIntExtra("environment_id", -1)
-        val environmentName = intent.getStringExtra("environment_name") ?: "Desconocido"
-        val userId = intent.getIntExtra("user_id", -1)
 
         if (deviceId != -1) {
             loadDeviceDetails(deviceId, deviceName)
         }
 
-        // Botón para regresar a la actividad anterior
-        val btnBack: Button = findViewById(R.id.btnBack)
-        btnBack.setOnClickListener {
-            finish() // Simplemente vuelve a la actividad anterior
+        // Conectar WebSocket
+        iniciarWebSocket()
+
+        // Botón para regresar
+        findViewById<Button>(binding.btnBack.id).setOnClickListener {
+            finish()
         }
     }
 
@@ -40,54 +46,65 @@ class DeviceDetailBebederoActivity : AppCompatActivity() {
         binding.txtDeviceName.text = "Nombre del Dispositivo: $deviceName"
     }
 
+    private fun enviarMensaje(topic: String, payload: String) {
+        val messageSender = MessageSender()
+        messageSender.enviarMensaje(topic, payload,
+            onResponse = { response -> println("Respuesta: $response") },
+            onError = { error -> println("Error: $error") })
+    }
+
+    private fun iniciarWebSocket() {
+        val client = OkHttpClient.Builder()
+            .readTimeout(3, TimeUnit.SECONDS)
+            .build()
+
+        val request = Request.Builder()
+            .url("ws://atenasoficial.com:3003") // Cambia si tu IP/host es otro
+            .build()
+
+        webSocket = client.newWebSocket(request, object : WebSocketListener() {
+            override fun onOpen(webSocket: WebSocket, response: Response) {
+                runOnUiThread {
+                    println("WebSocket del Comedero Bebedero abierto")
+                }
+            }
+
+            override fun onMessage(webSocket: WebSocket, text: String) {
+                runOnUiThread {
+                    procesarMensaje(text)
+                }
+            }
+
+            override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                runOnUiThread {
+                    println("Error WebSocket: ${t.message}")
+                }
+            }
+        })
+    }
+
     private fun procesarMensaje(mensaje: String) {
         try {
             val json = JSONObject(mensaje)
             val topic = json.getString("topic")
-            val message = json.getString("message") // El valor de la distancia en cm
+            val message = json.getString("message")
 
-            // Convertimos el mensaje a un valor numérico (float o double)
-            val distancia = message.toFloatOrNull() // Convertimos a float, si no es posible, regresa null
-
-            // Solo procesamos si la distancia es válida
-            if (distancia != null) {
-                when (topic) {
-                    "ultrasonic-water" -> {
-                        // Si la distancia es menor a 5 cm, cambiamos el color a verde, si no, a rojo
-                        if (distancia < 5) {
-                            binding.statusProximidad.setBackgroundResource(R.drawable.circle_green)
-                        } else {
-                            binding.statusProximidad.setBackgroundResource(R.drawable.circle_red)
-                        }
-                    }
-                    "sensor-water" -> {
-                        // Ejemplo para otro sensor, si quieres añadir más lógica
-                        if (message == "normal") {
-                            binding.statusAgua.setBackgroundResource(R.drawable.circle_green)
-                        } else {
-                            binding.statusAgua.setBackgroundResource(R.drawable.circle_red)
-                        }
-                    }
-                    else -> {
-                        println("Topic desconocido")
-                    }
+            when (topic) {
+                "bebedero-agua" -> {
+                    binding.txtAgua.text = "Estado del Bebedero"
+                    binding.txtAguavalor.text = message
                 }
-            } else {
-                println("La distancia recibida no es válida: $message")
+                else -> {
+                    println("Topic desconocido")
+                }
             }
         } catch (e: Exception) {
             println("Error al procesar JSON: ${e.message}")
         }
     }
 
-    private fun enviarMensaje(topic: String, payload: String) {
-        val messageSender = MessageSender()
-        messageSender.enviarMensaje(topic, payload,
-            onResponse = { response ->
-                println("Respuesta: $response")
-            },
-            onError = { error ->
-                println("Error: $error")
-            })
+    override fun onDestroy() {
+        super.onDestroy()
+        webSocket.close(1000, "Actividad del comedero destruida")
     }
 }

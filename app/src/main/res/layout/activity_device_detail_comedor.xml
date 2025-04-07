@@ -126,12 +126,14 @@
                             android:textColor="#FFFFFF"
                             android:textSize="18sp" />
 
-                        <View
-                            android:id="@+id/statusProximidad"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_marginStart="8dp"
-                            android:background="@drawable/status_indicator"/>
+                        <TextView
+                            android:id="@+id/txtProximidadvalor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Proximidad"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
                     </LinearLayout>
 
                     <!-- Sensor de peso -->
@@ -150,15 +152,19 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Peso actual: 0g"
+                            android:text="Estado Actual del almacén:"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp" />
 
-                        <ImageView
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:src="@drawable/status_indicator"
-                            android:layout_marginStart="8dp"/>
+                        <TextView
+                            android:id="@+id/txtPesovalor"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Peso"
+                            android:textColor="#FFFFFF"
+                            android:textSize="18sp" />
+
                     </LinearLayout>
 
                     <!-- Botones -->
